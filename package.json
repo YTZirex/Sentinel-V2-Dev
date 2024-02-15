@@ -1,0 +1,28 @@
+{
+  "name": "learning-discordts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "clean": "del /s /q build",
+    "build": "tsc --build",
+    "start": "npm run clean && npm run build && node build/index.js",
+    "startNoClean": "npm run build && node build/index.js",
+    "devStart": "npm run clean && npm run build && node build/index.js --development",
+    "devStartNoClean": "npm run build && node build/index.js --development"
+  },
+  "keywords": [],
+  "author": "ofb",
+  "license": "ISC",
+  "dependencies": {
+    "@types/ms": "^0.7.34",
+    "axios": "^1.6.7",
+    "colors": "^1.4.0",
+    "dbots": "^11.0.0",
+    "discord-arts": "^0.5.8",
+    "discord.js": "^14.14.1",
+    "dotenv": "^16.4.1",
+    "glob": "^10.3.10",
+    "mongoose": "^8.1.1"
+  }
+}
