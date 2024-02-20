@@ -48,87 +48,8 @@ export default class Announcement extends Command {
 
     let commandCounter = await CommandCounter.findOne({ global: 1 });
 
-    if (!commandCounter) {
-      commandCounter = await CommandCounter.create({
-        global: 1,
-        logs: {
-          logsToggle: {
-            used: 0,
-          },
-          logsSet: {
-            used: 0,
-          },
-        },
-        language: {
-          languagePreview: {
-            used: 0,
-          },
-          languageSet: {
-            used: 0,
-          },
-        },
-        account: {
-          accountCreate: {
-            used: 0,
-          },
-          accountDelete: {
-            used: 0,
-          },
-        },
-        job: {
-          jobInformations: {
-            used: 0,
-          },
-          jobChange: {
-            used: 0,
-          },
-        },
-        ban: {
-          banAdd: {
-            used: 0,
-          },
-          banRemove: {
-            used: 0,
-          },
-        },
-        timeout: {
-          timeoutRemove: {
-            used: 0,
-          },
-          timeoutAdd: {
-            used: 0,
-          },
-        },
-        kick: {
-          used: 0,
-        },
-        clear: {
-          used: 0,
-        },
-        botInfo: {
-          used: 0,
-        },
-        profile: {
-          used: 0,
-        },
-        serverInfo: {
-          used: 0,
-        },
-        userInfo: {
-          used: 0,
-        },
-        slowmode: {
-          used: 0,
-        },
-        announcement: {
-          used: 0,
-        },
-      });
-      await commandCounter.save();
-    }
-
-    commandCounter.announcement.used += 1;
-    await commandCounter.save();
+    commandCounter!.announcement.used += 1;
+    await commandCounter!.save();
 
     let errorEmbed = new EmbedBuilder().setTitle("Oops!").setColor("Red");
 
@@ -136,22 +57,26 @@ export default class Announcement extends Command {
       if (guild && guild?.language) {
         return interaction.reply({
           embeds: [
-            errorEmbed.setDescription(
-              `❌ ${
+            {
+              color: 0xff6666,
+              title: guild.language === "fr" ? "Oups!" : "Oops!",
+              description: `❌ ${
                 guild?.language === "fr"
-                  ? "L'annonce doit contenir moins de 1024 charactères !"
-                  : "The announcement must be less than 1024 characters!"
-              }`
-            ),
+                  ? "❌ L'annonce doit contenir moins de 1024 charactères !"
+                  : "❌ The announcement must be less than 1024 characters!"
+              }`,
+            },
           ],
           ephemeral: true,
         });
       } else {
         return interaction.reply({
           embeds: [
-            errorEmbed.setDescription(
-              "The announcement must be less than 1024 characters!"
-            ),
+            {
+              color: 0xff6666,
+              title: "Oops!",
+              description: `❌ The announcement must be less than 1024 characters!`,
+            },
           ],
           ephemeral: true,
         });
@@ -162,37 +87,32 @@ export default class Announcement extends Command {
       if (guild && guild?.language) {
         await channel.send({
           embeds: [
-            new EmbedBuilder()
-              .setThumbnail(interaction.guild?.iconURL()!)
-              .setColor("Yellow")
-              .setTitle(
-                `${
-                  guild.language === "fr"
-                    ? "📢 Nouvelle Annonce"
-                    : "📢 New Announcement"
-                }`
-              )
-              .setDescription(content!.replace(/\|/g, "\n"))
-              .setAuthor({
+            {
+              color: 0xff6633,
+              title:
+                guild.language === "fr"
+                  ? "📢 Nouvelle Annonce"
+                  : "📢 New Announcement",
+              description: content!.replace(/\|/g, "\n"),
+              author: {
                 name: interaction.user.username,
-                iconURL: interaction.user.displayAvatarURL(),
-              }),
+                icon_url: interaction.user.displayAvatarURL(),
+              },
+            },
           ],
         });
 
         interaction.reply({
           embeds: [
-            new EmbedBuilder()
-              .setColor("Yellow")
-              .setDescription(
-                `${
-                  guild.language === "fr"
-                    ? "📢 L'annonce a été envoyée avec succès !"
-                    : "📢 Successfully sent the announcement!"
-                }`
-              ),
+            {
+              color: 0xff6633,
+              title:
+                guild.language === "fr"
+                  ? "📢 L'annonce a été envoyée avec succès !"
+                  : "📢 Successfully sent the announcement!",
+            },
           ],
-          ephemeral: true
+          ephemeral: true,
         });
 
         if (
@@ -207,21 +127,19 @@ export default class Announcement extends Command {
               )) as TextChannel
             ).send({
               embeds: [
-                new EmbedBuilder()
-                  .setThumbnail(interaction.guild?.iconURL()!)
-                  .setColor("Yellow")
-                  .setTitle(
-                    `${
-                      guild.language === "fr"
-                        ? "📢 Nouvelle Annonce"
-                        : "📢 New Announcement"
-                    }`
-                  )
-                  .setDescription(content!.replace(/\|/g, "\n"))
-                  .setAuthor({
+                {
+                  color: 0xff6633,
+                  title: `${
+                    guild.language === "fr"
+                      ? "📢 Nouvelle Annonce"
+                      : "📢 New Announcement"
+                  }`,
+                  description: content!.replace(/\|/g, "\n"),
+                  author: {
                     name: interaction.user.username,
-                    iconURL: interaction.user.displayAvatarURL(),
-                  }),
+                    icon_url: interaction.user.displayAvatarURL(),
+                  },
+                },
               ],
             });
           } catch (err) {}
@@ -229,25 +147,26 @@ export default class Announcement extends Command {
       } else {
         await channel.send({
           embeds: [
-            new EmbedBuilder()
-              .setThumbnail(interaction.guild?.iconURL()!)
-              .setColor("Yellow")
-              .setTitle("📢 Announcement")
-              .setDescription(content!.replace(/\|/g, "\n"))
-              .setAuthor({
+            {
+              color: 0xff6633,
+              title: "📢 Announcement",
+              description: content!.replace(/\|/g, "\n"),
+              author: {
                 name: interaction.user.username,
-                iconURL: interaction.user.displayAvatarURL(),
-              }),
+                icon_url: interaction.user.displayAvatarURL(),
+              },
+            },
           ],
         });
 
         interaction.reply({
           embeds: [
-            new EmbedBuilder()
-              .setColor("Yellow")
-              .setDescription("📢 Successfully sent the announcement!"),
+            {
+              color: 0xff6633,
+              description: `📢 Successfully sent the announcement !`,
+            },
           ],
-          ephemeral: true
+          ephemeral: true,
         });
 
         if (
@@ -262,15 +181,18 @@ export default class Announcement extends Command {
               )) as TextChannel
             ).send({
               embeds: [
-                new EmbedBuilder()
-                  .setThumbnail(interaction.guild?.iconURL()!)
-                  .setColor("Yellow")
-                  .setTitle("📢 New Announcement")
-                  .setDescription(content!.replace(/\|/g, "\n"))
-                  .setAuthor({
+                {
+                  color: 0xff6633,
+                  thumbnail: {
+                    url: interaction.guild?.iconURL()!,
+                  },
+                  title: "📢 New Announcement",
+                  description: content!.replace(/\|/g, "\n"),
+                  author: {
                     name: interaction.user.username,
-                    iconURL: interaction.user.displayAvatarURL(),
-                  }),
+                    icon_url: interaction.user.displayAvatarURL(),
+                  },
+                },
               ],
             });
           } catch (err) {}
@@ -280,21 +202,25 @@ export default class Announcement extends Command {
       if (guild && guild.language) {
         return interaction.reply({
           embeds: [
-            errorEmbed.setDescription(
-              `${
+            {
+              color: 0xff6666,
+              title: guild.language === "fr" ? "Oups!" : "Oops!",
+              description:
                 guild.language === "fr"
                   ? "❌ Une erreur est survenue lors de l'envoi de l'annonce"
-                  : "❌ An error occured while trying to send the announcement."
-              }`
-            ),
+                  : "❌ An error occured while trying to send the announcement.",
+            },
           ],
         });
       } else {
         return interaction.reply({
           embeds: [
-            errorEmbed.setDescription(
-              "❌ An error occured while trying to send the announcement."
-            ),
+            {
+              color: 0xff6666,
+              title: "Oops!",
+              description:
+                "❌ An error occured while trying to send the announcement.",
+            },
           ],
         });
       }
