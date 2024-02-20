@@ -23,9 +23,10 @@ export default class GuildCreate extends Event {
     owner
       ?.send({
         embeds: [
-          new EmbedBuilder()
-            .setColor("Green")
-            .setDescription(`Hey! Thanks for inviting me to your server!`),
+          {
+            color: 0x33cc99,
+            description: `Hey! Thanks for inviting me to your server!\n\nYou can edit my language by using the command </language set:1206014845267480617>.`,
+          }
         ],
       })
       .catch();

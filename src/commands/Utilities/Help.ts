@@ -252,6 +252,13 @@ export default class Select extends Command {
                             : `Deletes your bank account. We can't undo this action.`,
                       },
                       {
+                        name: "</account informations:1204810971416236072>",
+                        value:
+                          guild.language === "fr"
+                            ? `Donne des informations à propos de votre compte bancaire.`
+                            : `Get informations about your bank account.`,
+                      },
+                      {
                         name: "</job change:1205982914131791973>",
                         value:
                           guild.language === "fr"
@@ -264,6 +271,13 @@ export default class Select extends Command {
                           guild.language === "fr"
                             ? "Donne des informations à propos de votre emploi actuel."
                             : `Provides informations about your current job.`,
+                      },
+                      {
+                        name: "</work:1209577162487631872>",
+                        value:
+                          guild.language === "fr"
+                            ? "Vous permet de travailler."
+                            : "Allows you to work.",
                       },
                     ],
                   },
@@ -439,12 +453,20 @@ export default class Select extends Command {
                         value: `Deletes your bank account. We can't undo this action.`,
                       },
                       {
+                        name: "</account informations:1204810971416236072>",
+                        value: `Get informations about your bank account.`,
+                      },
+                      {
                         name: "</job change:1205982914131791973>",
                         value: `Allows you to change your job.`,
                       },
                       {
                         name: "</job informations:1205982914131791973>",
                         value: `Provides informations about your current job.`,
+                      },
+                      {
+                        name: "</work:1209577162487631872>",
+                        value: "Allows you to work.",
                       },
                     ],
                   },

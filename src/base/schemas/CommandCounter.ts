@@ -82,6 +82,9 @@ interface CommandCounter {
       used: number;
     };
   };
+  work: {
+    used: number;
+  };
 }
 
 export default model<CommandCounter>(
@@ -167,6 +170,9 @@ export default model<CommandCounter>(
       commands: {
         used: Number,
       },
+    },
+    work: {
+      used: Number,
     },
   })
 );

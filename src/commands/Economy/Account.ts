@@ -16,6 +16,12 @@ export default class Account extends Command {
       dev: false,
       options: [
         {
+          name: "informations",
+          description: `Get informations about your account.`,
+          type: ApplicationCommandOptionType.Subcommand,
+          options: [],
+        },
+        {
           name: "create",
           description: "Create a new account.",
           type: ApplicationCommandOptionType.Subcommand,
