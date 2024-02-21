@@ -3,6 +3,7 @@ import CustomClient from "../../base/classes/CustomClient";
 import SubCommand from "../../base/classes/SubCommand";
 import Economy from "../../base/schemas/Economy";
 import GuildConfig from "../../base/schemas/GuildConfig";
+import CommandCounter from "../../base/schemas/CommandCounter";
 
 export default class AccountInformations extends SubCommand {
   constructor(client: CustomClient) {
@@ -13,6 +14,9 @@ export default class AccountInformations extends SubCommand {
   async Execute(interaction: ChatInputCommandInteraction) {
     let economy = await Economy.findOne({ user: interaction.user.id });
     let guild = await GuildConfig.findOne({ id: interaction.guildId });
+    let commandcounter = await CommandCounter.findOne({ global: 1 });
+    commandcounter!.account.accountInformations.used += 1;
+    await commandcounter!.save();
 
     await interaction.deferReply({ ephemeral: true });
 
@@ -32,7 +36,7 @@ export default class AccountInformations extends SubCommand {
     interaction.editReply({
       embeds: [
         {
-          color: 0x33cc99,
+          color: 0xff6633,
           title:
             guild && guild.language === "fr"
               ? "Mes Informations"

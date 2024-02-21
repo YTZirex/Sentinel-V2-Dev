@@ -59,7 +59,7 @@ export default class UserInfo extends Command {
             author: {
               name: `${
                 guild.language === "fr"
-                  ? `Profile de ${fetchedMember.user.tag}`
+                  ? `Profil de ${fetchedMember.user.tag}`
                   : `${fetchedMember.user.tag}'s profile`
               }`,
               icon_url: fetchedMember.displayAvatarURL(),

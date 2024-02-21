@@ -21,6 +21,16 @@ export default class CommandHandler extends Event {
     });
   }
 
+  private uptimeString(seconds: number) {
+    // let days = Math.floor(seconds / (3600 * 24));
+    //  seconds -= days * 3600 * 24;
+    let hours = Math.floor(seconds / 3600);
+    seconds -= hours * 3600;
+    let minutes = Math.floor(seconds / 60);
+    seconds -= minutes * 60;
+    return `${hours}h, ${minutes}min, ${seconds}s`;
+  }
+
   async Execute(interaction: ChatInputCommandInteraction) {
     let failEmbed = new EmbedBuilder().setTitle(`Oops!`).setColor("Red");
 
@@ -167,20 +177,20 @@ export default class CommandHandler extends Event {
     if (
       timestamps.has(interaction.user.id) &&
       now < (timestamps.get(interaction.user.id) || 0) + cooldownAmount
-    )
+    ) {
+      const timeLeft =
+        (timestamps.get(interaction.user.id) || 0) + cooldownAmount - now;
       return interaction.reply({
         embeds: [
           failEmbed.setDescription(
-            `❌ Please wait another \`${(
-              ((timestamps.get(interaction.user.id) || 0) +
-                cooldownAmount -
-                now) /
-              1000
-            ).toFixed(1)}\` seconds to run this command.`
+            `❌ Please wait another \`${this.uptimeString(
+              Math.floor(timeLeft / 1000)
+            )}\` to run this command.`
           ),
         ],
         ephemeral: true,
       });
+    }
 
     timestamps.set(interaction.user.id, now);
     setTimeout(() => timestamps.delete(interaction.user.id), cooldownAmount);

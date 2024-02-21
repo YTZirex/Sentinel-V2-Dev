@@ -65,7 +65,7 @@ export default class BotInfo extends Command {
               0
             )}:R>
               > **${guild.language === "fr" ? "Commandes" : "Commands"}:** ${
-              this.client.commands.size
+              this.client.subCommands.size + this.client.commands.size
             }
               > **${
                 guild.language === "fr"
