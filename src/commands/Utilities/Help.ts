@@ -3,6 +3,7 @@ import Command from "../../base/classes/Command";
 import CustomClient from "../../base/classes/CustomClient";
 import Category from "../../base/enums/Category";
 import GuildConfig from "../../base/schemas/GuildConfig";
+import CommandCounter from "../../base/schemas/CommandCounter";
 
 export default class Select extends Command {
   constructor(client: CustomClient) {
@@ -22,6 +23,11 @@ export default class Select extends Command {
   async Execute(interaction: ChatInputCommandInteraction) {
     await interaction.deferReply();
     let interactionUserId = interaction.user.id;
+
+    let commandCounter = await CommandCounter.findOne({ global: 1 });
+    commandCounter!.help.used += 1;
+    await commandCounter?.save();
+
     let guild = await GuildConfig.findOne({
       id: interaction.guildId,
     });
@@ -54,6 +60,13 @@ export default class Select extends Command {
                     //description: "",
                   },
                   {
+                    label: "Fun",
+                    value: "fun",
+                    emoji: {
+                      name: "🎉",
+                    },
+                  },
+                  {
                     label: guild.language === "fr" ? "Economie" : "Economy",
                     value: "economy",
                     emoji: {
@@ -61,7 +74,8 @@ export default class Select extends Command {
                     },
                   },
                   {
-                    label: "Moderation",
+                    label:
+                      guild.language === "fr" ? "Modération" : "Moderation",
                     value: "moderation",
                     emoji: {
                       name: "🛡️",
@@ -110,6 +124,13 @@ export default class Select extends Command {
                       name: "🛠️",
                     },
                     //description: "",
+                  },
+                  {
+                    label: "Fun",
+                    value: "fun",
+                    emoji: {
+                      name: "🎉",
+                    },
                   },
                   {
                     label: "Economy",
@@ -216,6 +237,46 @@ export default class Select extends Command {
                             ? "Donne des informations à propos du serveur."
                             : `Provides informations about the server.`,
                       },
+                      {
+                        name: "</ping:1209939749746249769>",
+                        value:
+                          guild.language === "fr"
+                            ? `Donne la latence du bot.`
+                            : `Shows the bot's latency.`,
+                      },
+                      {
+                        name: "</avatar:1209939749746249770>",
+                        value:
+                          guild.language === "fr"
+                            ? `Montre l'avatar d'un utilisateur`
+                            : `Shows a user's avatar.`,
+                      },
+                    ],
+                  },
+                ],
+              });
+            } else if (choices === "fun") {
+              interaction.update({
+                embeds: [
+                  {
+                    color: 0x6666ff,
+                    title: "🎉 Fun",
+                    thumbnail: { url: this.client.user!.displayAvatarURL() },
+                    fields: [
+                      {
+                        name: "</magicball:1207786679742631967>",
+                        value:
+                          guild.language === "fr"
+                            ? "Permet de poser une question à la boule magique."
+                            : `Ask a question to the magic ball.`,
+                      },
+                      {
+                        name: "</tictactoe:1210221785849790495>",
+                        value:
+                          guild.language === "fr"
+                            ? `Joue une partie de morpion avec une IA ou un adversaire.`
+                            : `Play a game of tic tac toe with an AI or an opponent.`,
+                      },
                     ],
                   },
                 ],
@@ -246,6 +307,20 @@ export default class Select extends Command {
                             : `Deletes your bank account. We can't undo this action.`,
                       },
                       {
+                        name: "</account informations:1204810971416236072>",
+                        value:
+                          guild.language === "fr"
+                            ? `Donne des informations à propos de votre compte bancaire.`
+                            : `Get informations about your bank account.`,
+                      },
+                      {
+                        name: "</job list:1205982914131791973>",
+                        value:
+                          guild.language === "fr"
+                            ? `Permet de voir la liste des métiers disponibles.`
+                            : `Allows you to see the list of all available jobs.`,
+                      },
+                      {
                         name: "</job change:1205982914131791973>",
                         value:
                           guild.language === "fr"
@@ -258,6 +333,13 @@ export default class Select extends Command {
                           guild.language === "fr"
                             ? "Donne des informations à propos de votre emploi actuel."
                             : `Provides informations about your current job.`,
+                      },
+                      {
+                        name: "</work:1209577162487631872>",
+                        value:
+                          guild.language === "fr"
+                            ? "Vous permet de travailler."
+                            : "Allows you to work.",
                       },
                     ],
                   },
@@ -410,6 +492,34 @@ export default class Select extends Command {
                         name: "</serverinfo:1204396655840075787>",
                         value: `Provides informations about the server.`,
                       },
+                      {
+                        name: "</ping:1209939749746249769>",
+                        value: `Shows the bot's latency.`,
+                      },
+                      {
+                        name: "</avatar:1209939749746249770>",
+                        value: `Shows a user's avatar.`,
+                      },
+                    ],
+                  },
+                ],
+              });
+            } else if (choices === "fun") {
+              interaction.update({
+                embeds: [
+                  {
+                    color: 0x6666ff,
+                    title: "🎉 Fun",
+                    thumbnail: { url: this.client.user!.displayAvatarURL() },
+                    fields: [
+                      {
+                        name: "</magicball:1207786679742631967>",
+                        value: `Ask a question to the magic ball.`,
+                      },
+                      {
+                        name: "</tictactoe:1210221785849790495>",
+                        value: `Play a game of tic tac toe with an AI or an opponent.`,
+                      },
                     ],
                   },
                 ],
@@ -433,12 +543,24 @@ export default class Select extends Command {
                         value: `Deletes your bank account. We can't undo this action.`,
                       },
                       {
+                        name: "</account informations:1204810971416236072>",
+                        value: `Get informations about your bank account.`,
+                      },
+                      {
+                        name: "</job list:1205982914131791973>",
+                        value: `Allows you to see the list of all available jobs.`,
+                      },
+                      {
                         name: "</job change:1205982914131791973>",
                         value: `Allows you to change your job.`,
                       },
                       {
                         name: "</job informations:1205982914131791973>",
                         value: `Provides informations about your current job.`,
+                      },
+                      {
+                        name: "</work:1209577162487631872>",
+                        value: "Allows you to work.",
                       },
                     ],
                   },

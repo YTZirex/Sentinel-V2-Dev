@@ -16,6 +16,12 @@ export default class Job extends Command {
       category: Category.Economy,
       options: [
         {
+          name: 'list',
+          description: `Get the list of all jobs available.`,
+          type: ApplicationCommandOptionType.Subcommand,
+          options: [],
+        },
+        {
           name: "informations",
           type: ApplicationCommandOptionType.Subcommand,
           description: "Get informations about your job",

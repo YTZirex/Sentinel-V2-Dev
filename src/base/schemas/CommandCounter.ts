@@ -25,12 +25,18 @@ interface CommandCounter {
     accountDelete: {
       used: number;
     };
+    accountInformations: {
+      used: number;
+    };
   };
   job: {
     jobInformations: {
       used: number;
     };
     jobChange: {
+      used: number;
+    };
+    jobList: {
       used: number;
     };
   };
@@ -82,6 +88,15 @@ interface CommandCounter {
       used: number;
     };
   };
+  work: {
+    used: number;
+  };
+  avatar: {
+    used: number;
+  };
+  ping: {
+    used: number;
+  };
 }
 
 export default model<CommandCounter>(
@@ -111,12 +126,18 @@ export default model<CommandCounter>(
       accountDelete: {
         used: Number,
       },
+      accountInformations: {
+        used: Number,
+      },
     },
     job: {
       jobInformations: {
         used: Number,
       },
       jobChange: {
+        used: Number,
+      },
+      jobList: {
         used: Number,
       },
     },
@@ -167,6 +188,15 @@ export default model<CommandCounter>(
       commands: {
         used: Number,
       },
+    },
+    work: {
+      used: Number,
+    },
+    avatar: {
+      used: Number,
+    },
+    ping: {
+      used: Number,
     },
   })
 );

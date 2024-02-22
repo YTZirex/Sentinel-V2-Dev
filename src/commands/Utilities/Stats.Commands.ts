@@ -42,6 +42,8 @@ export default class StatsCommands extends SubCommand {
                         commandCounter!.stats.commands.used
                       }**
                       > UserInfo: **${commandCounter!.userInfo.used}**
+                      > Ping: **${commandCounter!.ping.used}**
+                      > Avatar: **${commandCounter!.avatar.used}** 
                       
                       __**💸 ${
                         guild.language === "fr" ? "Economie" : "Economy"
@@ -53,10 +55,14 @@ export default class StatsCommands extends SubCommand {
                       > Account - Delete: **${
                         commandCounter!.account.accountDelete.used
                       }**
+                      > Account - Informations: **${
+                        commandCounter!.account.accountInformations.used
+                      }**
                       > Job - Change: **${commandCounter!.job.jobChange.used}**
                       > Job - Informations: **${
                         commandCounter!.job.jobInformations.used
                       }**
+                      > Job - List: **${commandCounter!.job.jobList.used}**
                       
                       __**🛡️ ${
                         guild.language === "fr" ? "Modération" : "Moderation"
@@ -111,6 +117,8 @@ export default class StatsCommands extends SubCommand {
                         commandCounter!.stats.commands.used
                       }**
                       > UserInfo: **${commandCounter!.userInfo.used}**
+                      > Ping: **${commandCounter!.ping.used}**
+                      > Avatar: **${commandCounter!.avatar.used}**
                       
                       __**💸 Economy**__
   
@@ -120,10 +128,14 @@ export default class StatsCommands extends SubCommand {
                       > Account - Delete: **${
                         commandCounter!.account.accountDelete.used
                       }**
+                      > Account - Informations: **${
+                        commandCounter!.account.accountInformations.used
+                      }**
                       > Job - Change: **${commandCounter!.job.jobChange.used}**
                       > Job - Informations: **${
                         commandCounter!.job.jobInformations.used
                       }**
+                      > Job - List: **${commandCounter!.job.jobList.used}**
                       
                       __**🛡️ Moderation**__
   

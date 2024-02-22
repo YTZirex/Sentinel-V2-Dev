@@ -12,7 +12,7 @@ export default class Stats extends Command {
       default_member_permissions:
         PermissionsBitField.Flags.UseApplicationCommands,
       cooldown: 3,
-      dev: true,
+      dev: false,
       category: Category.Utilities,
       options: [
         {

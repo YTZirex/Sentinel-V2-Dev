@@ -40,7 +40,7 @@ export default class CustomClient extends Client implements ICustomClient {
       this.developmentMode ? this.config.devMongoURI : this.config.mongoURI
     ).then(() =>
       console.log(
-        `[DB] Connected in ${
+        `✅ [DB] Connected in ${
           this.developmentMode ? "development" : "production"
         } mode.`.green
       )

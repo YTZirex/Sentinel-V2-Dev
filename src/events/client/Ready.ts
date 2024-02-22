@@ -18,7 +18,7 @@ export default class Ready extends Event {
   }
 
   async Execute(client: CustomClient) {
-    console.log(`${this.client.user?.tag} is now ready!`.green);
+    console.log(`✅ ${this.client.user?.tag} is now ready!`.green);
 
     const clientId = this.client.developmentMode
       ? this.client.config.devClientId
@@ -33,7 +33,7 @@ export default class Ready extends Event {
       }
     );
     console.log(
-      `Successfully registered ${devCommands.length} dev commands!`.green
+      `✅ Successfully registered ${devCommands.length} dev commands!`.green
     );
 
     if (!this.client.developmentMode) {
@@ -45,11 +45,20 @@ export default class Ready extends Event {
           ),
         }
       );
+      console.log(
+        `✅ Successfully registered ${globalCommands.length} global commands!`.green
+      );
 
       console.log(
-        `Successfully registered ${globalCommands.length} global commands!`
-          .green
+        `✅ ${
+          this.client.subCommands.size + this.client.commands.size
+        } commands loaded !`.green
       );
+
+      //   console.log(
+      //   `Successfully registered ${globalCommands.length} global commands!`
+      //      .green
+      //  );
     }
     /*
 

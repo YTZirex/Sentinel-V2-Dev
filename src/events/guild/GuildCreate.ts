@@ -1,4 +1,4 @@
-import { EmbedBuilder, Events, Guild } from "discord.js";
+import { EmbedBuilder, Events, Guild, TextChannel } from "discord.js";
 import CustomClient from "../../base/classes/CustomClient";
 import Event from "../../base/classes/Event";
 import GuildConfig from "../../base/schemas/GuildConfig";
@@ -23,9 +23,58 @@ export default class GuildCreate extends Event {
     owner
       ?.send({
         embeds: [
-          new EmbedBuilder()
-            .setColor("Green")
-            .setDescription(`Hey! Thanks for inviting me to your server!`),
+          {
+            color: 0x33cc99,
+            thumbnail: { url: this.client.user?.displayAvatarURL()!},
+            description: `Hey! Thanks for inviting me to your server!\n\nYou can edit my language by using the command </language set:1206014845267480617>.`,
+          },
+        ],
+      })
+      .catch();
+    ((await this.client.channels.fetch("1209839875201966151")) as TextChannel)
+      .send({
+        embeds: [
+          {
+            title: "I was added to a new server !",
+            color: 0x33cc99,
+            thumbnail: {
+              url: guild.iconURL() || this.client.user?.displayAvatarURL()!,
+            },
+            fields: [
+              {
+                name: "Server Name:",
+                value: guild.name,
+              },
+              {
+                name: "Server ID:",
+                value: guild.id,
+              },
+              {
+                name: "Server Description:",
+                value: guild.description || "None",
+              },
+              {
+                name: "Member Count:",
+                value: `${guild.memberCount}`,
+              },
+              {
+                name: "Owner:",
+                value: (await guild.fetchOwner()).user.username,
+              },
+              {
+                name: "Owner ID:",
+                value: guild.ownerId,
+              },
+              {
+                name: "Boost Level:",
+                value: `${guild.premiumTier}`,
+              },
+              {
+                name: "Total Boosts:",
+                value: `${guild.premiumSubscriptionCount}`,
+              },
+            ],
+          },
         ],
       })
       .catch();
