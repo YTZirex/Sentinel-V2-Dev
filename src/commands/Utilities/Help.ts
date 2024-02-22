@@ -270,6 +270,13 @@ export default class Select extends Command {
                             ? "Permet de poser une question à la boule magique."
                             : `Ask a question to the magic ball.`,
                       },
+                      {
+                        name: "</tictactoe:1210221785849790495>",
+                        value:
+                          guild.language === "fr"
+                            ? `Joue une partie de morpion avec une IA ou un adversaire.`
+                            : `Play a game of tic tac toe with an AI or an opponent.`,
+                      },
                     ],
                   },
                 ],
@@ -508,6 +515,10 @@ export default class Select extends Command {
                       {
                         name: "</magicball:1207786679742631967>",
                         value: `Ask a question to the magic ball.`,
+                      },
+                      {
+                        name: "</tictactoe:1210221785849790495>",
+                        value: `Play a game of tic tac toe with an AI or an opponent.`,
                       },
                     ],
                   },

@@ -13,7 +13,7 @@ export default class extends Command {
       name: "work",
       description: "Allows you to work.",
       dev: false,
-      cooldown: 43200,
+      cooldown: 28800,
       options: [],
       default_member_permissions:
         PermissionsBitField.Flags.UseApplicationCommands,

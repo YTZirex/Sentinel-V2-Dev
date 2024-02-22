@@ -7,6 +7,7 @@ enum Category {
   Economy = "Economy",
   Staff = "Staff",
   Blacklist = "Blacklist",
+  Music = "Music"
 }
 
 export default Category;

@@ -47,10 +47,10 @@ export default class Ping extends Command {
             guild && guild.language === "fr"
               ? `> \`⏱️\` La latence du **Bot** est \`${botPing}ms\`\n
               > \`🌐\` La latence de l'**API Discord** est \`${apiLatency}ms\`\n
-              > \`🌿\` La latence de la **Base de données** est \`${mongooseLatency}ms\``
+              > \`💾\` La latence de la **Base de données** est \`${mongooseLatency}ms\``
               : `> \`⏱️\` **Bot**'s latency is \`${botPing}ms\`\n
               > \`🌐\` **Discord API**'s latency is \`${apiLatency}ms\`\n
-              > \`🌿\` **Database**'s latency is \`${mongooseLatency}ms\``,
+              > \`💾\` **Database**'s latency is \`${mongooseLatency}ms\``,
           color: 0x7289da,
           author: {
             name: interaction.user.username,
