@@ -36,6 +36,7 @@ export default class Ping extends Command {
     await interaction.deferReply();
     const end = performance.now();
     const botPing = Math.floor(end - start);
+    
     interaction.editReply({
       embeds: [
         {
