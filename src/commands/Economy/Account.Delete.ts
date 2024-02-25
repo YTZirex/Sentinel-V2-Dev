@@ -54,7 +54,6 @@ export default class AccountDelete extends SubCommand {
           ],
           ephemeral: true,
         });
-        return;
       } else {
         let tempEconomy = await Economy.findOne({ user: interaction.user.id });
         try {
