@@ -32,7 +32,6 @@ export default class LogsSet extends SubCommand {
     });
 
     try {
-
       if (!guild) guild = await GuildConfig.create({ id: interaction.guildId });
 
       //@ts-ignore
@@ -44,46 +43,60 @@ export default class LogsSet extends SubCommand {
         return interaction.editReply({
           embeds: [
             {
-              title: `${guild.language === 'fr' ? "Succès!" : `Success!`}`,
+              title: `${guild.language === "fr" ? "Succès!" : `Success!`}`,
               color: 0x33cc99,
-              description: `${guild.language === 'fr' ? `✅ Les logs **${logType}** sont maintenant dans ${channel}.`: `✅ Updated **${logType}** logs to **${channel}**`}`,
-            }
+              description: `${
+                guild.language === "fr"
+                  ? `✅ Les logs **${logType}** sont maintenant dans ${channel}.`
+                  : `✅ Updated **${logType}** logs to **${channel}**`
+              }`,
+            },
           ],
         });
+        // file deepcode ignore DuplicateIfBody: <please specify a reason of ignoring this>
       } else {
         return interaction.editReply({
           embeds: [
             {
-              title: `${guild.language === 'fr' ? "Succès!" : `Success!`}`,
+              title: `${guild.language === "fr" ? "Succès!" : `Success!`}`,
               color: 0x33cc99,
-              description: `${guild.language === 'fr' ? `✅ Les logs **${logType}** sont maintenant dans ${channel}.`: `✅ Updated **${logType}** logs to **${channel}**`}`,
-            }
+              description: `${
+                guild.language === "fr"
+                  ? `✅ Les logs **${logType}** sont maintenant dans ${channel}.`
+                  : `✅ Updated **${logType}** logs to **${channel}**`
+              }`,
+            },
           ],
         });
       }
     } catch (err) {
       console.log(err);
       if (guild && guild.language) {
-      return interaction.editReply({
-        embeds: [
-          {
-            color: 0xff6666,
-            title: `${guild.language === 'fr' ? "Oups!" : "Oops!"}`,
-            description: `${guild.language === 'fr'? `❌ Une erreur est survenue en mettant à jour la base de donnée. Veuillez réessayer.` : `❌ An error occured while updating the database. Please try again.`}`,
-          }
-        ],
-      });
-    } else {
-      return interaction.editReply({
-        embeds: [
-          {
-            color: 0xff6666,
-            title: 'Oops!',
-            description: '❌ An error occured while trying to update the database. Please try again.'
-          }
-        ]
-      })
-    }
+        return interaction.editReply({
+          embeds: [
+            {
+              color: 0xff6666,
+              title: `${guild.language === "fr" ? "Oups!" : "Oops!"}`,
+              description: `${
+                guild.language === "fr"
+                  ? `❌ Une erreur est survenue en mettant à jour la base de donnée. Veuillez réessayer.`
+                  : `❌ An error occured while updating the database. Please try again.`
+              }`,
+            },
+          ],
+        });
+      } else {
+        return interaction.editReply({
+          embeds: [
+            {
+              color: 0xff6666,
+              title: "Oops!",
+              description:
+                "❌ An error occured while trying to update the database. Please try again.",
+            },
+          ],
+        });
+      }
     }
   }
 }
