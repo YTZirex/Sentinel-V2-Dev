@@ -14,7 +14,14 @@ export default class CustomClient extends Client implements ICustomClient {
   cooldowns: Collection<string, Collection<string, number>>;
   developmentMode: boolean;
   constructor() {
-    super({ intents: [GatewayIntentBits.Guilds] });
+    super({
+      intents: [
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.GuildMembers,
+        GatewayIntentBits.GuildPresences,
+      ],
+    });
 
     this.config = require(`${process.cwd()}/data/config.json`);
     this.handler = new Handler(this);
