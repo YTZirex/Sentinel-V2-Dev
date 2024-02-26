@@ -7,6 +7,7 @@ export default class Account extends Command {
   constructor(client: CustomClient) {
     super(client, {
       name: "account",
+      premium: false,
       description: "Manage your bank account",
       category: Category.Economy,
       dm_permission: false,

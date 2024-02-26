@@ -16,6 +16,7 @@ export default class Announcement extends Command {
   constructor(client: CustomClient) {
     super(client, {
       name: "announcement",
+      premium: false,
       description: "Allows you to send an announcement in the channel.",
       category: Category.Administration,
       dm_permission: false,

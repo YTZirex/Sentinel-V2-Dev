@@ -21,6 +21,7 @@ export default class Kick extends Command {
       name: "kick",
       description: "Kicks a user from the server.",
       category: Category.Moderation,
+      premium: false,
       options: [
         {
           name: "target",

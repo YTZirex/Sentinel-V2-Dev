@@ -10,11 +10,13 @@ import CustomClient from "../../base/classes/CustomClient";
 import Category from "../../base/enums/Category";
 import CommandCounter from "../../base/schemas/CommandCounter";
 import GuildConfig from "../../base/schemas/GuildConfig";
+import PremiumUser from "../../base/schemas/PremiumUser";
 
 export default class UserInfo extends Command {
   constructor(client: CustomClient) {
     super(client, {
       name: "userinfo",
+      premium: false,
       description: "Get the informations about a user",
       category: Category.Utilities,
       cooldown: 3,
@@ -76,6 +78,11 @@ export default class UserInfo extends Command {
                 ? "**Compte crée:**"
                 : "**Account Created:**"
             } <t:${(fetchedMember.user.createdTimestamp / 1000).toFixed(0)}:D>
+            > **Sentinel Premium**: ${
+              (await this.IsPremium(fetchedMember.user.id)) === true
+                ? "✅"
+                : "❌"
+            }
   
             __**${
               guild.language === "fr" ? "Informations Membre" : "Member Infos"
@@ -135,6 +142,11 @@ export default class UserInfo extends Command {
             > **Account Created:** <t:${(
               fetchedMember.user.createdTimestamp / 1000
             ).toFixed(0)}:D>
+            > **Sentinel Premium**: ${
+              (await this.IsPremium(fetchedMember.user.id)) === true
+                ? "✅"
+                : "❌"
+            }
   
             __**Member Info**__
             > **Nickname:** ${
@@ -165,6 +177,16 @@ export default class UserInfo extends Command {
       });
     }
   }
+
+  async IsPremium(userId: string) {
+    let code = await PremiumUser.findOne({ "redeemedBy.id": userId });
+    if (code) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   GetJoinPosition(
     interaction: ChatInputCommandInteraction,
     target: GuildMember

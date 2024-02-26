@@ -11,6 +11,7 @@ export default class extends Command {
   constructor(client: CustomClient) {
     super(client, {
       name: "work",
+      premium: false,
       description: "Allows you to work.",
       dev: false,
       cooldown: 28800,

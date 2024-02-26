@@ -11,6 +11,7 @@ export default class Logs extends Command {
   constructor(client: CustomClient) {
     super(client, {
       name: "logs",
+      premium: false,
       description: "Configure the logs for your server.",
       category: Category.Administration,
       default_member_permissions: PermissionsBitField.Flags.ManageGuild,

@@ -16,6 +16,7 @@ export default class Slowmode extends Command {
   constructor(client: CustomClient) {
     super(client, {
       name: "slowmode",
+      premium: false,
       description: "Set the slowmode of a channel.",
       category: Category.Administration,
       default_member_permissions: PermissionsBitField.Flags.ManageMessages,

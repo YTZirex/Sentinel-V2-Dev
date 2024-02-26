@@ -21,6 +21,7 @@ export default class BotInfo extends Command {
   constructor(client: CustomClient) {
     super(client, {
       name: "botinfo",
+      premium: false,
       description: "Get informations about the bot",
       dm_permission: false,
       default_member_permissions:

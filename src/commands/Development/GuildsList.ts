@@ -14,6 +14,7 @@ export default class GuildsList extends Command {
       description: "List all the guilds the bot is in.",
       options: [],
       dm_permission: false,
+      premium: false,
       default_member_permissions: PermissionsBitField.Flags.Administrator,
       dev: true,
       cooldown: 3,

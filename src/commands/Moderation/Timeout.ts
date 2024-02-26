@@ -9,6 +9,7 @@ export default class Timeout extends Command {
       name: "timeout",
       description: "Timeout a user from the server.",
       category: Category.Moderation,
+      premium: false,
       default_member_permissions: PermissionsBitField.Flags.ModerateMembers,
       dm_permission: false,
       cooldown: 5,

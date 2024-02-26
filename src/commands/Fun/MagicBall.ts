@@ -12,6 +12,7 @@ export default class MagicBall extends Command {
   constructor(client: CustomClient) {
     super(client, {
       name: "magicball",
+      premium: false,
       description: "Ask a question to the magic ball.",
       dm_permission: false,
       default_member_permissions:

@@ -128,7 +128,6 @@ export default class AccountCreate extends SubCommand {
         }
 
         let uniqueCreditCardNumber = await this.generateCreditCard();
-        // file deepcode ignore BadAwaitExpression: <please specify a reason of ignoring this>
         let crypto = await this.generateRandomNumber();
         try {
           economy = await Economy.create({

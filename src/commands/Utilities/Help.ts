@@ -9,6 +9,7 @@ export default class Select extends Command {
   constructor(client: CustomClient) {
     super(client, {
       name: "help",
+      premium: false,
       description: "Lists all available commands.",
       dm_permission: false,
       default_member_permissions:

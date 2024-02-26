@@ -18,6 +18,7 @@ export default class AccountInformations extends SubCommand {
     commandcounter!.account.accountInformations.used += 1;
     await commandcounter!.save();
 
+
     await interaction.deferReply({ ephemeral: true });
 
     if (!economy)

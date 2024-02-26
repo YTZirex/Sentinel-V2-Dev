@@ -14,6 +14,7 @@ export default class Avatar extends Command {
   constructor(client: CustomClient) {
     super(client, {
       name: "avatar",
+      premium: false,
       description: `Get the avatar of a user.`,
       dev: false,
       cooldown: 3,

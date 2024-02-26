@@ -16,6 +16,7 @@ export default class Profile extends Command {
   constructor(client: CustomClient) {
     super(client, {
       name: "profile",
+      premium: false,
       description: "Get a user's profile.",
       category: Category.Utilities,
       default_member_permissions:

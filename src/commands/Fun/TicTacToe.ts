@@ -13,6 +13,7 @@ export default class TicTacToeCommand extends Command {
   constructor(client: CustomClient) {
     super(client, {
       name: "tictactoe",
+      premium: false,
       description: `Play a game of tic tac toe !`,
       dev: false,
       cooldown: 3,

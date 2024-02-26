@@ -12,6 +12,7 @@ export default class Ban extends Command {
       default_member_permissions: PermissionsBitField.Flags.BanMembers,
       dm_permission: false,
       cooldown: 5,
+      premium: false,
       dev: false,
       options: [
         {

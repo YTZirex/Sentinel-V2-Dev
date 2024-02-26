@@ -10,6 +10,7 @@ export default class Language extends Command {
       default_member_permissions: PermissionsBitField.Flags.ManageGuild,
       description: "Manage the language of the bot in the server.",
       dm_permission: false,
+      premium: false,
       category: Category.Administration,
       cooldown: 5,
       dev: false,

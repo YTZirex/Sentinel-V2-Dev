@@ -8,6 +8,7 @@ export default class Job extends Command {
     super(client, {
       name: "job",
       description: "Manage your job",
+      premium: false,
       dm_permission: false,
       default_member_permissions:
         PermissionsBitField.Flags.UseApplicationCommands,

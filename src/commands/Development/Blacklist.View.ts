@@ -27,7 +27,6 @@ export default class BlacklistView extends SubCommand {
           },
         ],
       });
-      // file deepcode ignore DuplicateIfBody: <please specify a reason of ignoring this>
     } else if (blacklistedUser && blacklistedUser.blacklisted === false) {
       return interaction.editReply({
         embeds: [

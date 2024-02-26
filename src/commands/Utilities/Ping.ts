@@ -9,6 +9,7 @@ export default class Ping extends Command {
   constructor(client: CustomClient) {
     super(client, {
       name: "ping",
+      premium: false,
       description: `Shows the bot's latency.`,
       default_member_permissions:
         PermissionsBitField.Flags.UseApplicationCommands,
@@ -36,7 +37,6 @@ export default class Ping extends Command {
     await interaction.deferReply();
     const end = performance.now();
     const botPing = Math.floor(end - start);
-    
     interaction.editReply({
       embeds: [
         {

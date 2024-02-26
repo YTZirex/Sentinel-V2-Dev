@@ -19,6 +19,7 @@ export default class Clear extends Command {
   constructor(client: CustomClient) {
     super(client, {
       name: "clear",
+      premium: false,
       description: "Clears a number of messages",
       options: [
         {

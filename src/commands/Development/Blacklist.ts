@@ -10,6 +10,7 @@ export default class Blacklist extends Command {
       description: `Manage the blacklist of a user.`,
       dev: true,
       cooldown: 5,
+      premium: false,
       default_member_permissions:
         PermissionsBitField.Flags.UseApplicationCommands,
       dm_permission: false,
