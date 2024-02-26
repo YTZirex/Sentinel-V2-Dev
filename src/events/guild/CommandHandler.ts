@@ -11,6 +11,7 @@ import UserConfig from "../../base/schemas/UserConfig";
 import BlacklistedUser from "../../base/schemas/BlacklistedUser";
 import GuildConfig from "../../base/schemas/GuildConfig";
 import Category from "../../base/enums/Category";
+import PremiumUser from "../../base/schemas/PremiumUser";
 
 export default class CommandHandler extends Event {
   constructor(client: CustomClient) {
@@ -32,6 +33,7 @@ export default class CommandHandler extends Event {
   }
 
   async Execute(interaction: ChatInputCommandInteraction) {
+    let guild = await GuildConfig.findOne({ id: interaction.guildId });
     let failEmbed = new EmbedBuilder().setTitle(`Oops!`).setColor("Red");
 
     if (!interaction.isChatInputCommand()) return;
@@ -72,7 +74,6 @@ export default class CommandHandler extends Event {
     }
 
     if (blacklistedUser.blacklisted === true) {
-      let guild = await GuildConfig.findOne({ id: interaction.guildId });
       if (guild && guild.language) {
         return interaction.reply({
           embeds: [
@@ -133,6 +134,32 @@ export default class CommandHandler extends Event {
       }
     }
 
+    if (command.premium === true) {
+      const userPremiumRecord = await PremiumUser.findOne({
+        "redeemedBy.id": interaction.user.id,
+      });
+
+      if (!userPremiumRecord || userPremiumRecord.expiresAt < new Date()) {
+        if (userPremiumRecord) {
+          await PremiumUser.deleteOne({ "redeemedBy.id": interaction.user.id });
+        }
+
+        return interaction.reply({
+          embeds: [
+            {
+              color: 0xff6666,
+              title: guild && guild.language === "fr" ? "Oups!" : "Oops!",
+              description:
+                guild && guild.language === "fr"
+                  ? `Cette commande est seulement pour les utilisateurs Sentinel Premium.`
+                  : `This command is only for Sentinel Premium users.`,
+            },
+          ],
+          ephemeral: true,
+        });
+      }
+    }
+
     if (
       command.dev &&
       command.category === Category.Blacklist &&
@@ -155,7 +182,28 @@ export default class CommandHandler extends Event {
 
     if (
       command.dev &&
+      command.category === Category.Staff &&
+      userConfig.editPremium === false
+    ) {
+      return interaction.reply({
+        embeds: [
+          {
+            color: 0xff6666,
+            title: "Oops!",
+            description: `❌ You are not allowed to use this command.`,
+            thumbnail: {
+              url: this.client.user?.displayAvatarURL()!,
+            },
+          },
+        ],
+        ephemeral: true,
+      });
+    }
+
+    if (
+      command.dev &&
       command.category !== Category.Blacklist &&
+      command.category !== Category.Staff &&
       userConfig.dev === false
     )
       return interaction.reply({

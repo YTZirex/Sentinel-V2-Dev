@@ -4,6 +4,7 @@ interface UserConfig {
   id: string;
   dev: boolean;
   canBlacklist: boolean;
+  editPremium: boolean;
 }
 
 export default model<UserConfig>(
@@ -12,5 +13,6 @@ export default model<UserConfig>(
     id: String,
     dev: Boolean,
     canBlacklist: Boolean,
+    editPremium: Boolean,
   })
 );

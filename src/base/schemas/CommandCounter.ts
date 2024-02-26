@@ -25,6 +25,7 @@ interface CommandCounter {
     accountDelete: {
       used: number;
     };
+<<<<<<< HEAD
     accountInformations: {
       used: number;
     };
@@ -39,6 +40,16 @@ interface CommandCounter {
     jobList: {
       used: number;
     };
+=======
+  };
+  job: {
+    jobInformations: {
+      used: number;
+    };
+    jobChange: {
+      used: number;
+    };
+>>>>>>> c62972778487a52e833c1422705ca3a9907d6491
   };
   ban: {
     banAdd: {
@@ -88,6 +99,7 @@ interface CommandCounter {
       used: number;
     };
   };
+<<<<<<< HEAD
   work: {
     used: number;
   };
@@ -97,6 +109,8 @@ interface CommandCounter {
   ping: {
     used: number;
   };
+=======
+>>>>>>> c62972778487a52e833c1422705ca3a9907d6491
 }
 
 export default model<CommandCounter>(
@@ -126,6 +140,7 @@ export default model<CommandCounter>(
       accountDelete: {
         used: Number,
       },
+<<<<<<< HEAD
       accountInformations: {
         used: Number,
       },
@@ -140,6 +155,16 @@ export default model<CommandCounter>(
       jobList: {
         used: Number,
       },
+=======
+    },
+    job: {
+      jobInformations: {
+        used: Number,
+      },
+      jobChange: {
+        used: Number,
+      },
+>>>>>>> c62972778487a52e833c1422705ca3a9907d6491
     },
     ban: {
       banAdd: {
@@ -189,6 +214,7 @@ export default model<CommandCounter>(
         used: Number,
       },
     },
+<<<<<<< HEAD
     work: {
       used: Number,
     },
@@ -198,5 +224,7 @@ export default model<CommandCounter>(
     ping: {
       used: Number,
     },
+=======
+>>>>>>> c62972778487a52e833c1422705ca3a9907d6491
   })
 );
