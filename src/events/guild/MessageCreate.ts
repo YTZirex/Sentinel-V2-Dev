@@ -18,12 +18,8 @@ export default class MessageCreate extends Event {
   async Execute(message: Message) {
     if (message.author.bot) return false;
 
+    /// if bot pinged
     if (message.content.includes(`<@${this.client.user!.id}>`)) {
-      //if (
-      //  message.content.includes("@everyone") ||
-      //  message.content.includes("@here") ||
-      //   message.type === MessageType.Reply
-      //  )
       message.reply(
         `Hey, I'm Sentinel! You can see my commands using </help:1205979101765173258>.`
       );
