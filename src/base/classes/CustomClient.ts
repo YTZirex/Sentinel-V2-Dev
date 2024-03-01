@@ -45,13 +45,25 @@ export default class CustomClient extends Client implements ICustomClient {
 
     connect(
       this.developmentMode ? this.config.devMongoURI : this.config.mongoURI
-    ).then(() =>
-      console.log(
-        `✅ [DB] Connected in ${
-          this.developmentMode ? "development" : "production"
-        } mode.`.green
+    )
+      .then(() =>
+        console.log(
+          `✅ [DB] Connected in ${
+            this.developmentMode ? "development" : "production"
+          } mode.`.green
+        )
       )
-    );
+      .then(() =>
+        mongoose.connection.db
+          .admin()
+          .command({ ping: 1 })
+          .then(() =>
+            console.log(
+              `✅ [DB] Pinged deployment. Successfully connected to MongoDB.`
+                .green
+            )
+          )
+      );
   }
 
   LoadHandlers(): void {

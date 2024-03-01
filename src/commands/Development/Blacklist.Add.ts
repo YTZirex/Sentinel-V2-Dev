@@ -100,7 +100,7 @@ export default class BlacklistAdd extends SubCommand {
             ],
           },
         ],
-      })
+      }).then((x) => x.crosspost())
       .then((x) => x.react("🛡️"));
     return interaction.reply(`${target} is now blacklisted!`);
   }

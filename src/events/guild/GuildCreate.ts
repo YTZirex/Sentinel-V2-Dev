@@ -25,7 +25,7 @@ export default class GuildCreate extends Event {
         embeds: [
           {
             color: 0x33cc99,
-            thumbnail: { url: this.client.user?.displayAvatarURL()!},
+            thumbnail: { url: this.client.user?.displayAvatarURL()! },
             description: `Hey! Thanks for inviting me to your server!\n\nYou can edit my language by using the command </language set:1206014845267480617>.`,
           },
         ],
@@ -77,6 +77,8 @@ export default class GuildCreate extends Event {
           },
         ],
       })
+      .then((x) => x.crosspost())
+      .then((x) => x.react("📜"))
       .catch();
   }
 }

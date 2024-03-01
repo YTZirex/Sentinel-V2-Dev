@@ -49,6 +49,8 @@ export default class Ready extends Event {
         `✅ Successfully registered ${globalCommands.length} global commands!`.green
       );
 
+      console.log(`✅ Successfully registered ${this.client.subCommands.size} sub commands!`.green)
+
       console.log(
         `✅ ${
           this.client.subCommands.size + this.client.commands.size

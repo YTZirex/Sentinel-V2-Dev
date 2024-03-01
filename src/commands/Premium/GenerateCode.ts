@@ -7,6 +7,7 @@ import Command from "../../base/classes/Command";
 import CustomClient from "../../base/classes/CustomClient";
 import Category from "../../base/enums/Category";
 import PremiumUser from "../../base/schemas/PremiumUser";
+import mongoose from "mongoose";
 
 export default class GenerateCode extends Command {
   constructor(client: CustomClient) {
