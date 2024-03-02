@@ -1,13 +1,8 @@
-import {
-  ApplicationCommandOptionType,
-  ChatInputCommandInteraction,
-  PermissionsBitField,
-} from "discord.js";
+import { ApplicationCommandOptionType, ChatInputCommandInteraction, PermissionsBitField } from "discord.js";
 import Command from "../../base/classes/Command";
 import CustomClient from "../../base/classes/CustomClient";
 import Category from "../../base/enums/Category";
 import PremiumUser from "../../base/schemas/PremiumUser";
-import mongoose from "mongoose";
 
 export default class GenerateCode extends Command {
   constructor(client: CustomClient) {
@@ -47,7 +42,7 @@ export default class GenerateCode extends Command {
       code,
       length: codeType,
     });
-    
+
     try {
       await newCode.save();
       return interaction.reply({

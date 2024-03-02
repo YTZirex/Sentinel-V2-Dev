@@ -4,6 +4,7 @@ import Event from "../../base/classes/Event";
 import colors from "colors";
 import Command from "../../base/classes/Command";
 import IConfig from "../../base/interfaces/IConfig";
+import BlacklistedUser from "../../base/schemas/BlacklistedUser";
 // import dbots from "dbots";
 
 colors.enable();
@@ -46,10 +47,14 @@ export default class Ready extends Event {
         }
       );
       console.log(
-        `✅ Successfully registered ${globalCommands.length} global commands!`.green
+        `✅ Successfully registered ${globalCommands.length} global commands!`
+          .green
       );
 
-      console.log(`✅ Successfully registered ${this.client.subCommands.size} sub commands!`.green)
+      console.log(
+        `✅ Successfully registered ${this.client.subCommands.size} sub commands!`
+          .green
+      );
 
       console.log(
         `✅ ${
@@ -108,6 +113,7 @@ export default class Ready extends Event {
       });
       i++;
     }, 5000);
+    let blacklistUsersKicked = 0;
   }
 
   private GetJson(commands: Collection<string, Command>): object[] {

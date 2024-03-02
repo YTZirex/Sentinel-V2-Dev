@@ -31,6 +31,14 @@ export default class GuildCreate extends Event {
         ],
       })
       .catch();
+
+    (
+      (await this.client.channels.fetch("1213602474653515806")) as TextChannel
+    ).setName(
+      `📜 ${this.client.guilds.cache.size} servers!`,
+      "New Server Added"
+    );
+
     ((await this.client.channels.fetch("1209839875201966151")) as TextChannel)
       .send({
         embeds: [
@@ -40,6 +48,9 @@ export default class GuildCreate extends Event {
             thumbnail: {
               url: guild.iconURL() || this.client.user?.displayAvatarURL()!,
             },
+            description: `I am now in **${
+              (await this.client.guilds.fetch()).size
+            } servers**.`,
             fields: [
               {
                 name: "Server Name:",

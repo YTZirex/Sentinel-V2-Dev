@@ -23,6 +23,12 @@ export default class BlacklistAdd extends SubCommand {
     let blacklistedUser = await BlacklistedUser.findOne({ id: target.id });
     let userConfig = await UserConfig.findOne({ id: target.id });
 
+    if (
+      target.id === "1203014293549744189" ||
+      target.id === "1203400577242107934"
+    )
+      return interaction.reply(`You cannot blacklist Sentinel.`);
+
     if (reason.length > 1024)
       return interaction.reply(
         `The reason can not be more than 1024 characters.`
@@ -100,7 +106,8 @@ export default class BlacklistAdd extends SubCommand {
             ],
           },
         ],
-      }).then((x) => x.crosspost())
+      })
+      .then((x) => x.crosspost())
       .then((x) => x.react("🛡️"));
     return interaction.reply(`${target} is now blacklisted!`);
   }

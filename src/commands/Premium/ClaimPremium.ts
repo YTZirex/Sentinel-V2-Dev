@@ -17,7 +17,7 @@ export default class ClaimPremium extends Command {
       dm_permission: false,
       default_member_permissions:
         PermissionsBitField.Flags.UseApplicationCommands,
-      dev: true,
+      dev: false,
       premium: false,
       cooldown: 3,
       category: Category.Premium,

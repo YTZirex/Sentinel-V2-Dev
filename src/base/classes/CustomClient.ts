@@ -20,6 +20,7 @@ export default class CustomClient extends Client implements ICustomClient {
         GatewayIntentBits.GuildMessages,
         GatewayIntentBits.GuildMembers,
         GatewayIntentBits.GuildPresences,
+        GatewayIntentBits.MessageContent,
       ],
     });
 
