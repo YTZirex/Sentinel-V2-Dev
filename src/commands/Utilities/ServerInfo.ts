@@ -3,6 +3,8 @@ import Command from "../../base/classes/Command";
 import CustomClient from "../../base/classes/CustomClient";
 import Category from "../../base/enums/Category";
 import CommandCounter from "../../base/schemas/CommandCounter";
+import GuildConfig from "../../base/schemas/GuildConfig";
+import GuildProtection from "../../base/schemas/GuildProtection";
 
 export default class ServerInfo extends Command {
   constructor(client: CustomClient) {
@@ -30,5 +32,21 @@ export default class ServerInfo extends Command {
       content: "Command not made yet.",
       ephemeral: true,
     });
+
+    let guildFetched = await interaction.guild?.fetch();
+
+    let guild = await GuildConfig.findOne({
+      id: interaction.guildId
+    });
+
+    let guildProtection = await GuildProtection.findOne({
+      id: interaction.guildId,
+    })
+
+    return interaction.reply({
+      content: `This command was not made yet.`,
+      ephemeral: true
+    })
+
   }
 }

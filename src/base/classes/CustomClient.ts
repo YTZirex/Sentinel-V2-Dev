@@ -5,8 +5,10 @@ import Handler from "./Handler";
 import Command from "./Command";
 import SubCommand from "./SubCommand";
 import mongoose, { connect } from "mongoose";
-
-export default class CustomClient extends Client implements ICustomClient {
+export default class CustomClient
+  extends Client<true>
+  implements ICustomClient
+{
   handler: Handler;
   config: IConfig;
   commands: Collection<string, Command>;
@@ -38,6 +40,7 @@ export default class CustomClient extends Client implements ICustomClient {
         this.developmentMode ? "development" : "production"
       } mode.`
     );
+
     this.LoadHandlers();
 
     this.login(

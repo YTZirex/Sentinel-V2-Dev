@@ -40,6 +40,10 @@ export default class ProtectionScan extends SubCommand {
       }
     }
 
+    var formattedList = BlacklistedUsers.map(function (user: any, index: any) {
+      return index + 1 + " - " + user;
+    }).join("\n");
+
     return interaction.reply({
       embeds: [
         /*  {
@@ -58,12 +62,13 @@ export default class ProtectionScan extends SubCommand {
           color: blacklistedUsersCount === 0 ? 0x33cc99 : 0xff6666,
           title:
             guild && guild.language === "fr"
-              ? `Liste des utilisateurs`
-              : "List of users",
+              ? `Liste des utilisateurs (**${blacklistedUsersCount}**)`
+              : `List of users (**${blacklistedUsersCount}**)`,
           description:
             blacklistedUsersCount === 0
               ? `${guild && guild.language === "fr" ? "Aucun" : "None"}`
-              : `${BlacklistedUsers.join("\n")}`,
+              : `${formattedList}`,
+          thumbnail: { url: interaction.guild?.iconURL()! },
         },
       ],
     });

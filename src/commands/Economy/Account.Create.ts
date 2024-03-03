@@ -544,6 +544,84 @@ export default class AccountCreate extends SubCommand {
             expirationDate: "11/27",
           });
           await economy.save();
+          (
+            (await interaction.client.channels.fetch(
+              "1207753909532098600"
+            )) as TextChannel
+          ).send({
+            content: `✅ A new account has been opened by ${interaction.user.username}\n_ID: ${economy._id}`,
+            embeds: [
+              {
+                color: 0x33cc99,
+                title: "✅ Account created !",
+                thumbnail: {
+                  url: (await fetchedMember).displayAvatarURL({ size: 64 }),
+                },
+                fields: [
+                  {
+                    name: "👤 **Fullname:**",
+                    value: `${economy.names}`,
+                  },
+                  {
+                    name: "\u200a",
+                    value: "\u200a",
+                  },
+                  {
+                    name: "👶 **Date Of Birth:**",
+                    value: `${economy.dateOfBirth}`,
+                  },
+                  {
+                    name: "\u200a",
+                    value: "\u200a",
+                  },
+                  {
+                    name: "👤 **Gender:**",
+                    value: `${economy.gender === "male" ? "Male" : "Female"}`,
+                  },
+                  {
+                    name: "\u200a",
+                    value: "\u200a",
+                  },
+                  {
+                    name: "🏦 **Bank: **",
+                    value: "Sentinel Finance",
+                  },
+                  {
+                    name: "\u200a",
+                    value: "\u200a",
+                  },
+                  {
+                    name: "💸 **Amount: **",
+                    value: "0",
+                  },
+                  {
+                    name: "\u200a",
+                    value: "\u200a",
+                  },
+                  {
+                    name: "💳 **Number:**",
+                    value: `${economy.creditCardNumber}`,
+                  },
+                  {
+                    name: "\u200a",
+                    value: "\u200a",
+                  },
+                  {
+                    name: "💳 **Cryptogram:**",
+                    value: `${economy.cvc}`,
+                  },
+                  {
+                    name: "\u200a",
+                    value: "\u200a",
+                  },
+                  {
+                    name: "💳** Expires:**",
+                    value: "11/27",
+                  },
+                ],
+              },
+            ],
+          });
           await interaction.reply({
             embeds: [
               {

@@ -1,4 +1,11 @@
-import { ActivityType, Collection, Events, REST, Routes } from "discord.js";
+import {
+  ActivityType,
+  Client,
+  Collection,
+  Events,
+  REST,
+  Routes,
+} from "discord.js";
 import CustomClient from "../../base/classes/CustomClient";
 import Event from "../../base/classes/Event";
 import colors from "colors";
@@ -62,60 +69,38 @@ export default class Ready extends Event {
         } commands loaded !`.green
       );
 
-      //   console.log(
-      //   `Successfully registered ${globalCommands.length} global commands!`
-      //      .green
-      //  );
+      let guildsFetchedSize = (await this.client.guilds.fetch()).size;
+      // Our pointer
+      let i = 0;
+      // Every 15 seconds, update the status
+      setInterval(() => {
+        let statuses = [
+          `${this.client.guilds.cache
+            .map((guild) => guild.memberCount)
+            .reduce((a, b) => a + b, 0)} users!`,
+          `Version ${this.client.config.botVersion}`,
+          `Released 10/02/2024 10:00PM !`,
+          `${guildsFetchedSize} servers!`,
+          `Online since ${this.uptimeString(Math.floor(process.uptime()))}`,
+        ];
+
+        // Get the status
+        let status = statuses[i];
+        // If it's undefined, it means we reached the end of the array
+        if (!status) {
+          // Restart at the first status
+          status = statuses[0];
+          i = 0;
+        }
+        client.user?.setPresence({
+          activities: [{ name: status, type: ActivityType.Watching }],
+          status: "online",
+        });
+        i++;
+      }, 5000);
+      let blacklistUsersKicked = 0;
     }
-    /*
-
-    const poster = new dbots.Poster({
-      client,
-      apiKeys: {
-        discordbotsgg: '…',
-        topgg: '…',
-        lsterminalink: '…',
-        carbon: '…'
-      },
-      clientLibrary: 'discord.js'
-    })
-  
-    // Starts an interval thats posts to all services every 30 minutes.
-    poster.startInterval()
-*/
-
-    let guildsFetchedSize = (await this.client.guilds.fetch()).size;
-    // Our pointer
-    let i = 0;
-    // Every 15 seconds, update the status
-    setInterval(() => {
-      let statuses = [
-        `${this.client.guilds.cache
-          .map((guild) => guild.memberCount)
-          .reduce((a, b) => a + b, 0)} users!`,
-        `Version ${this.client.config.botVersion}`,
-        `Released 10/02/2024 10:00PM !`,
-        `${guildsFetchedSize} servers!`,
-        `Online since ${this.uptimeString(Math.floor(process.uptime()))}`,
-      ];
-
-      // Get the status
-      let status = statuses[i];
-      // If it's undefined, it means we reached the end of the array
-      if (!status) {
-        // Restart at the first status
-        status = statuses[0];
-        i = 0;
-      }
-      client.user?.setPresence({
-        activities: [{ name: status, type: ActivityType.Watching }],
-        status: "online",
-      });
-      i++;
-    }, 5000);
-    let blacklistUsersKicked = 0;
   }
-
   private GetJson(commands: Collection<string, Command>): object[] {
     const data: object[] = [];
 
@@ -142,5 +127,16 @@ export default class Ready extends Event {
     let minutes = Math.floor(seconds / 60);
     seconds -= minutes * 60;
     return `${days}d, ${hours}h, ${minutes}min, ${seconds}s`;
+  }
+
+  private getAllCommands() {
+    const commands = [];
+    for (const [command] of this.client.commands) {
+      commands.push({
+        name: this.client.commands.get(`${command}`)!.name,
+        description: this.client.commands.get(`${command}`)!.description,
+      });
+    }
+    return commands;
   }
 }

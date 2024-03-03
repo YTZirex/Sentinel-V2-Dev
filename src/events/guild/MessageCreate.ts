@@ -79,7 +79,10 @@ export default class MessageCreate extends Event {
     if (
       message.content.toLowerCase().includes("http://") ||
       message.content.toLowerCase().includes("https://") ||
-      message.content.toLowerCase().includes("www.")
+      message.content.toLowerCase().includes("www.") ||
+      message.content.toLowerCase().includes(".fr") ||
+      message.content.toLowerCase().includes(".com") ||
+      message.content.toLowerCase().includes(".co.uk")
     ) {
       if (
         guildProtection &&
@@ -108,16 +111,23 @@ export default class MessageCreate extends Event {
       guildProtection &&
       guildProtection.protection.mentions.max.enabled === true
     ) {
-      let content = message.content.split(" ");
+      let content = message.content;
       let count = 0;
-
-      for (let i = 0; i < content.length; i++) {
-        if (content[i].match(new RegExp(/<@!*&*[0-9]+>/g))) count++;
+    
+      // Regular expression to match mentions
+      let mentionRegex = /<@!*&*[0-9]+>|@everyone|@here/g;
+    
+      // Find all mentions in the message content
+      let mentions = content.match(mentionRegex);
+    
+      // Count the number of mentions found
+      if (mentions) {
+        count = mentions.length;
       }
-
+    
       if (count > guildProtection.protection.mentions.max.limit) {
         if (message.member?.permissions.has("ManageMessages")) return false;
-
+    
         message.delete();
         message.channel.send(
           `<@${message.author.id}>, ${
@@ -128,5 +138,6 @@ export default class MessageCreate extends Event {
         );
       }
     }
+    
   }
 }
