@@ -8,6 +8,7 @@ enum Category {
   Staff = "Staff",
   Blacklist = "Blacklist",
   Premium = "Premium",
+  Games = "Games",
 }
 
 export default Category;

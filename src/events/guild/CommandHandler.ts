@@ -3,6 +3,7 @@ import {
   Collection,
   EmbedBuilder,
   Events,
+  TextChannel,
 } from "discord.js";
 import CustomClient from "../../base/classes/CustomClient";
 import Event from "../../base/classes/Event";
@@ -249,12 +250,85 @@ export default class CommandHandler extends Event {
         subCommandGroup ? `.${subCommandGroup}` : ""
       }.${interaction.options.getSubcommand(false) || ""}`;
 
+      console.log(
+        `${interaction.user.username} (${interaction.user.id}) - Executed /${interaction.commandName}`
+      );
+
       return (
         this.client.subCommands.get(subCommand)?.Execute(interaction) ||
         command.Execute(interaction)
       );
-    } catch (err) {
+    } catch (err: any) {
       console.log(err);
+      let interactionGuild = interaction.guild;
+      let interactionMember = interaction.member;
+      let interactionChannel = interaction.channel;
+      let errorTime = `<t:${Math.floor(Date.now() / 1000)}:R>`;
+
+      (
+        (await this.client.channels.fetch("1215341642228301824")) as TextChannel
+      ).send({
+        embeds: [
+          {
+            color: 0x6666ff,
+            description:
+              "An error has been flagged while using a slash command. All other forms of interaction will not be flagged with this system.",
+            fields: [
+              {
+                name: "Error Command",
+                value: `\`${interaction.commandName}\``,
+              },
+              {
+                name: "Error Stack",
+                value: `\`${err.stack}\``,
+              },
+              {
+                name: "Error Message",
+                value: `\`${err.message}\``,
+              },
+              {
+                name: "Error Timestamp",
+                value: `\`${errorTime}\``,
+              },
+              {
+                name: "Guild Name",
+                value: interaction.guild
+                  ? `\`${interaction.guild.name} (${interaction.guildId})\``
+                  : "None",
+              },
+              {
+                name: "Guild Channel",
+                value: interaction.guild
+                  ? `\`${interaction.channelId}\``
+                  : "None",
+              },
+              {
+                name: "Interaction Author",
+                value: `\`${interaction.user.username} (${interaction.user.id})\``,
+              },
+            ],
+            footer: { text: "Error Flag System" },
+            timestamp: `${Date.now()}`,
+          },
+        ],
+        content: `<@860281357014794241>`,
+      });
+
+      return interaction.reply({
+        embeds: [
+          {
+            color: 0xff6666,
+            title: guild && guild.language === "fr" ? "Oups!" : "Oops!",
+            description:
+              guild && guild.language === "fr"
+                ? "Une erreur est survenue lors de l'exécution de la commande. Veuillez réessayer plus tard."
+                : "An error occured while executing the command. Please try again later.",
+            thumbnail: {
+              url: this.client.user.displayAvatarURL(),
+            },
+          },
+        ],
+      });
     }
   }
 }

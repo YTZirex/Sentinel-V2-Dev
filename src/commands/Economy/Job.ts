@@ -17,7 +17,7 @@ export default class Job extends Command {
       category: Category.Economy,
       options: [
         {
-          name: 'list',
+          name: "list",
           description: `Get the list of all jobs available.`,
           type: ApplicationCommandOptionType.Subcommand,
           options: [],
@@ -76,6 +76,20 @@ export default class Job extends Command {
                   value: "astronaut",
                 },
               ],
+            },
+          ],
+        },
+        {
+          name: "delete",
+          description: "Delete your job informations.",
+          type: ApplicationCommandOptionType.Subcommand,
+          options: [
+            {
+              name: "confirm",
+              required: true,
+              type: ApplicationCommandOptionType.Boolean,
+              description:
+                "Once the command is executed, your job will be deleted. We can't undo this action.",
             },
           ],
         },

@@ -8,6 +8,7 @@ import CustomClient from "../../base/classes/CustomClient";
 import Category from "../../base/enums/Category";
 import PremiumUser from "../../base/schemas/PremiumUser";
 import GuildConfig from "../../base/schemas/GuildConfig";
+import CommandCounter from "../../base/schemas/CommandCounter";
 
 export default class ClaimPremium extends Command {
   constructor(client: CustomClient) {
@@ -34,6 +35,11 @@ export default class ClaimPremium extends Command {
   async Execute(interaction: ChatInputCommandInteraction) {
     const codeValue = interaction.options.getString("code");
     const userId = interaction.user.id;
+
+    let commandCounter = await CommandCounter.findOne({ global: 1 });
+
+    commandCounter!.claimpremium.used += 1;
+    await commandCounter?.save();
 
     let guild = await GuildConfig.findOne({ id: interaction.guildId });
 

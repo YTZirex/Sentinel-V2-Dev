@@ -8,6 +8,7 @@ import {
 } from "discord.js";
 import Category from "../../base/enums/Category";
 import GuildConfig from "../../base/schemas/GuildConfig";
+import CommandCounter from "../../base/schemas/CommandCounter";
 
 export default class Joke extends Command {
   constructor(client: CustomClient) {
@@ -26,6 +27,12 @@ export default class Joke extends Command {
   }
   async Execute(interaction: ChatInputCommandInteraction) {
     let guild = await GuildConfig.findOne({ id: interaction.guildId });
+
+    let commandCounter = await CommandCounter.findOne({ global: 1 });
+
+    commandCounter!.joke.used += 1;
+    await commandCounter?.save();
+
     await interaction.deferReply();
     try {
       let response = await axios.get(

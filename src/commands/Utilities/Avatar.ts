@@ -40,8 +40,7 @@ export default class Avatar extends Command {
     commandCounter!.avatar.used += 1;
     await commandCounter?.save();
 
-    let target = interaction.options.getUser("target") ||
-      interaction.user
+    let target = interaction.options.getUser("target") || interaction.user;
 
     await interaction.deferReply();
 
@@ -52,9 +51,12 @@ export default class Avatar extends Command {
         {
           color: 0xff6633,
           title: `${fetchedMember.tag}`,
-          url: target.displayAvatarURL(),
+          url:
+            target.displayAvatarURL() || this.client.user?.displayAvatarURL()!,
           image: {
-            url: target.displayAvatarURL({ size: 4096 }),
+            url:
+              target.displayAvatarURL({ size: 4096 }) ||
+              this.client.user?.displayAvatarURL({ size: 4096 })!,
           },
         },
       ],

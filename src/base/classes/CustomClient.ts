@@ -21,7 +21,6 @@ export default class CustomClient
         GatewayIntentBits.Guilds,
         GatewayIntentBits.GuildMessages,
         GatewayIntentBits.GuildMembers,
-        GatewayIntentBits.GuildPresences,
         GatewayIntentBits.MessageContent,
       ],
     });

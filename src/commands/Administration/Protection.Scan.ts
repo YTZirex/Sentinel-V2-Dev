@@ -4,6 +4,7 @@ import SubCommand from "../../base/classes/SubCommand";
 import GuildConfig from "../../base/schemas/GuildConfig";
 import BlacklistedUser from "../../base/schemas/BlacklistedUser";
 import { black } from "colors";
+import CommandCounter from "../../base/schemas/CommandCounter";
 
 export default class ProtectionScan extends SubCommand {
   constructor(client: CustomClient) {
@@ -16,6 +17,11 @@ export default class ProtectionScan extends SubCommand {
     let guildProtection = await GuildConfig.findOne({
       id: interaction.guildId,
     });
+
+    let commandCounter = await CommandCounter.findOne({ global: 1 });
+
+    commandCounter!.protection.scan.used += 1;
+    await commandCounter?.save();
 
     let kickUser = interaction.options.getBoolean("kick");
 

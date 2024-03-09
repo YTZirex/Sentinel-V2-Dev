@@ -3,6 +3,7 @@ import CustomClient from "../../base/classes/CustomClient";
 import SubCommand from "../../base/classes/SubCommand";
 import GuildConfig from "../../base/schemas/GuildConfig";
 import GuildProtection from "../../base/schemas/GuildProtection";
+import CommandCounter from "../../base/schemas/CommandCounter";
 
 export default class ProtectionMentions extends SubCommand {
   constructor(client: CustomClient) {
@@ -11,6 +12,12 @@ export default class ProtectionMentions extends SubCommand {
     });
   }
   async Execute(interaction: ChatInputCommandInteraction) {
+
+    let commandCounter = await CommandCounter.findOne({ global: 1 });
+
+    commandCounter!.protection.mentions.used += 1;
+    await commandCounter?.save();
+
     let guild = await GuildConfig.findOne({ id: interaction.guildId });
     let guildProtection = await GuildProtection.findOne({
       id: interaction.guildId,

@@ -25,7 +25,7 @@ export default class StatsCommands extends SubCommand {
           {
             color: 0x6666ff,
             title:
-              guild.language === "ffr"
+              guild.language === "fr"
                 ? "Statistiques des commandes"
                 : `Commands Statistics`,
             thumbnail: { url: this.client.user?.displayAvatarURL()! },
@@ -44,6 +44,26 @@ export default class StatsCommands extends SubCommand {
                       > UserInfo: **${commandCounter!.userInfo.used}**
                       > Ping: **${commandCounter!.ping.used}**
                       > Avatar: **${commandCounter!.avatar.used}** 
+                      > Quote: **${commandCounter!.quote.used}**
+
+                      __**🎉 Fun**__
+                      
+                      > Kiss: **${commandCounter!.kiss.used}**
+                      > Hug: **${commandCounter!.hug.used}**
+                      > MagicBall: **${commandCounter!.magicball.used}**
+                      > Joke: **${commandCounter!.joke.used}**
+
+                      __**🎮 ${guild.language === "fr" ? "Jeux" : "Games"}**__
+
+                      > Games - TicTacToe: **${
+                        commandCounter!.games.tictactoe.used
+                      }**
+                      > Games - 2048 : **${
+                        commandCounter!.games.twozerofoureight.used
+                      }**
+                      > Games - RPC : **${commandCounter!.games.rpc.used}**
+                      > Games - Slots: **${commandCounter!.games.slots.used}**
+                      > Games - Snake: **${commandCounter!.games.snake.used}**
                       
                       __**💸 ${
                         guild.language === "fr" ? "Economie" : "Economy"
@@ -63,6 +83,7 @@ export default class StatsCommands extends SubCommand {
                         commandCounter!.job.jobInformations.used
                       }**
                       > Job - List: **${commandCounter!.job.jobList.used}**
+                      > Job - Delete: **${commandCounter!.job.jobDelete.used}**
                       
                       __**🛡️ ${
                         guild.language === "fr" ? "Modération" : "Moderation"
@@ -81,6 +102,21 @@ export default class StatsCommands extends SubCommand {
   
                       __**🔐 Administration**__
   
+                      > Protection - Scan: **${
+                        commandCounter!.protection.scan.used
+                      }**
+                      > Protection - Blacklist: **${
+                        commandCounter!.protection.blacklist.used
+                      }**
+                      > Protection - Mentions: **${
+                        commandCounter!.protection.mentions.used
+                      }**
+                      > Protection - Messages: **${
+                        commandCounter!.protection.messages.used
+                      }**
+                      > Protection - Delete: **${
+                        commandCounter!.protection.delete.used
+                      }**
                       > Announcement: **${commandCounter!.announcement.used}**
                       > Language - Set: **${
                         commandCounter!.language.languageSet.used
@@ -119,7 +155,27 @@ export default class StatsCommands extends SubCommand {
                       > UserInfo: **${commandCounter!.userInfo.used}**
                       > Ping: **${commandCounter!.ping.used}**
                       > Avatar: **${commandCounter!.avatar.used}**
+                      > Quote: **${commandCounter!.quote.used}**
+
+                      __**🎉 Fun**__
                       
+                      > Kiss: **${commandCounter!.kiss.used}**
+                      > Hug: **${commandCounter!.hug.used}**
+                      > MagicBall: **${commandCounter!.magicball.used}**
+                      > Joke: **${commandCounter!.joke.used}**
+                      
+                      __**🎮 Games**__
+
+                      > Games - TicTacToe: **${
+                        commandCounter!.games.tictactoe.used
+                      }**
+                      > Games - 2048 : **${
+                        commandCounter!.games.twozerofoureight.used
+                      }**
+                      > Games - RPC : **${commandCounter!.games.rpc.used}**
+                      > Games - Slots: **${commandCounter!.games.slots.used}**
+                      > Games - Snake: **${commandCounter!.games.snake.used}**
+
                       __**💸 Economy**__
   
                       > Account - Create: **${
@@ -136,6 +192,7 @@ export default class StatsCommands extends SubCommand {
                         commandCounter!.job.jobInformations.used
                       }**
                       > Job - List: **${commandCounter!.job.jobList.used}**
+                      > Job - Delete: **${commandCounter!.job.jobDelete.used}**
                       
                       __**🛡️ Moderation**__
   
@@ -152,6 +209,21 @@ export default class StatsCommands extends SubCommand {
   
                       __**🔐 Administration**__
   
+                      > Protection - Scan: **${
+                        commandCounter!.protection.scan.used
+                      }**
+                      > Protection - Blacklist: **${
+                        commandCounter!.protection.blacklist.used
+                      }**
+                      > Protection - Mentions: **${
+                        commandCounter!.protection.mentions.used
+                      }**
+                      > Protection - Messages: **${
+                        commandCounter!.protection.messages.used
+                      }**
+                      > Protection - Delete: **${
+                        commandCounter!.protection.delete.used
+                      }**
                       > Announcement: **${commandCounter!.announcement.used}**
                       > Language - Set: **${
                         commandCounter!.language.languageSet.used

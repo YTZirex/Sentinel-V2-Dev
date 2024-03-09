@@ -47,7 +47,7 @@ export default class BotInfo extends Command {
     let guild = await GuildConfig.findOne({ id: interaction.guildId });
 
     if (guild && guild.language) {
-      interaction.reply({
+      return interaction.reply({
         embeds: [
           {
             title: ":question:  Sentinel : Informations",
@@ -91,17 +91,23 @@ export default class BotInfo extends Command {
               __**${
                 guild.language === "fr" ? "Informations Serveur" : "Guild Info"
               }**__
-              > **${guild.language === "fr" ? "Serveurs" : "Guilds"}:** ${
-              (await this.client.guilds.fetch()).size
-            }
               > **${
-                guild.language === "fr" ? "Membres" : "Members"
-              }:** ${this.client.guilds.cache
-              .map((guild) => guild.memberCount)
-              .reduce((a, b) => a + b, 0)}
+                guild.language === "fr" ? "Serveurs" : "Guilds"
+              }:** ${this.separateNumbers(
+              (await this.client.guilds.fetch()).size
+            )}
+              > **${
+                guild.language === "fr" ? "Utilisateurs" : "Users"
+              }:** ${this.separateNumbers(
+              this.client.guilds.cache
+                .map((guild) => guild.memberCount)
+                .reduce((a, b) => a + b, 0)
+            )}
               > **${
                 guild.language === "fr" ? "Salons" : "Channels"
-              }:** ${await this.client.channels.cache.size}
+              }:** ${this.separateNumbers(
+              await this.client.channels.cache.size
+            )}
     
               __**${
                 guild.language === "fr" ? "Informations Système" : "System Info"
@@ -185,7 +191,7 @@ export default class BotInfo extends Command {
                 type: 2,
                 style: 5,
                 label: "Support",
-                url: "https://discord.gg/My2BVCmJEY",
+                url: "https://discord.gg/wuETgs5mSa",
                 emoji: "💬",
               },
             ],
@@ -203,7 +209,7 @@ export default class BotInfo extends Command {
               new ButtonBuilder()
                 .setLabel("Support Server")
                 .setStyle(ButtonStyle.Link)
-                .setURL("https://discord.gg/My2BVCmJEY")
+                .setURL("https://https://discord.gg/wuETgs5mSa")
             ),
           ],*/
       });
@@ -231,11 +237,17 @@ export default class BotInfo extends Command {
               > **Uptime:** ${this.uptimeString(Math.floor(process.uptime()))}
     
               __**Guild Info**__
-              > **Total Guilds:** ${(await this.client.guilds.fetch()).size}
-              > **Total Members:** ${this.client.guilds.cache
-                .map((guild) => guild.memberCount)
-                .reduce((a, b) => a + b, 0)}
-              > **Total Channels:** ${await this.client.channels.cache.size}
+              > **Total Guilds:** ${this.separateNumbers(
+                (await this.client.guilds.fetch()).size
+              )}
+              > **Total Members:** ${this.separateNumbers(
+                this.client.guilds.cache
+                  .map((guild) => guild.memberCount)
+                  .reduce((a, b) => a + b, 0)
+              )}
+              > **Total Channels:** ${this.separateNumbers(
+                await this.client.channels.cache.size
+              )}
     
               __**System Info**__
               > **Operating System:** ${process.platform}
@@ -299,7 +311,7 @@ export default class BotInfo extends Command {
                 type: 2,
                 style: 5,
                 label: "Support Server",
-                url: "https://discord.gg/My2BVCmJEY",
+                url: "https://discord.gg/wuETgs5mSa",
                 emoji: "💬",
               },
             ],
@@ -317,7 +329,7 @@ export default class BotInfo extends Command {
               new ButtonBuilder()
                 .setLabel("Support Server")
                 .setStyle(ButtonStyle.Link)
-                .setURL("https://discord.gg/My2BVCmJEY")
+                .setURL("https://https://discord.gg/wuETgs5mSa")
             ),
           ],*/
       });
@@ -344,5 +356,24 @@ export default class BotInfo extends Command {
     let minutes = Math.floor(seconds / 60);
     seconds -= minutes * 60;
     return `${days} days, ${hours} hours, ${minutes} minutes, and ${seconds} seconds`;
+  }
+
+  private separateNumbers(number: any) {
+    // Convert the number to a string
+    let numberString = number.toString();
+
+    // Split the string into groups of three digits from the end
+    let separatedNumber = [];
+    let group = "";
+    for (let i = numberString.length - 1; i >= 0; i--) {
+      group = numberString[i] + group;
+      if (group.length === 3 || i === 0) {
+        separatedNumber.unshift(group);
+        group = "";
+      }
+    }
+
+    // Join the groups with spaces
+    return separatedNumber.join(" ");
   }
 }

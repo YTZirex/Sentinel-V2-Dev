@@ -8,6 +8,7 @@ import {
   PermissionsBitField,
 } from "discord.js";
 import GuildConfig from "../../base/schemas/GuildConfig";
+import CommandCounter from "../../base/schemas/CommandCounter";
 
 export default class kiss extends Command {
   constructor(client: CustomClient) {
@@ -35,13 +36,22 @@ export default class kiss extends Command {
     let apiUrl = `https://nekos.life/api/v2/img/kiss`;
     let target = interaction.options.getUser("target");
     await interaction.deferReply();
-    let guild = await GuildConfig.findOne({ id: interaction.guildId })
+    let guild = await GuildConfig.findOne({ id: interaction.guildId });
+
+    let commandCounter = await CommandCounter.findOne({ global: 1 });
+
+    commandCounter!.kiss.used += 1;
+    await commandCounter?.save();
+
     try {
       const response = await axios.get(apiUrl);
       const gifUrl = response.data.url;
 
       interaction.editReply({
-        content: guild && guild.language === 'fr' ? `${interaction.user} a embrassé ${target}` : `${interaction.user} kissed ${target}`,
+        content:
+          guild && guild.language === "fr"
+            ? `${interaction.user} a embrassé ${target}`
+            : `${interaction.user} kissed ${target}`,
         embeds: [
           {
             image: {
@@ -51,7 +61,11 @@ export default class kiss extends Command {
         ],
       });
     } catch (err) {
-      return interaction.editReply(`An error occured while trying to kiss.`);
+      return interaction.editReply(
+        guild && guild.language === "fr"
+          ? "Une erreur est survenue en essayant d'embrasser."
+          : `An error occured while trying to kiss.`
+      );
     }
   }
 }

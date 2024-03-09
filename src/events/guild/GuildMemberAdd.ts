@@ -17,6 +17,7 @@ export default class GuildMemberAdd extends Event {
     let guildProtection = await GuildProtection.findOne({
       id: member.guild.id,
     });
+
     if (blacklist?.blacklisted === true) {
       if (member.guild.id !== "1031586420575457341") {
         if (

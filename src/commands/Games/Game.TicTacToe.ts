@@ -8,31 +8,22 @@ import {
   PermissionsBitField,
 } from "discord.js";
 import GuildConfig from "../../base/schemas/GuildConfig";
+import CommandCounter from "../../base/schemas/CommandCounter";
+import SubCommand from "../../base/classes/SubCommand";
 
-export default class TicTacToeCommand extends Command {
+export default class TicTacToeCommand extends SubCommand {
   constructor(client: CustomClient) {
     super(client, {
-      name: "tictactoe",
-      premium: false,
-      description: `Play a game of tic tac toe !`,
-      dev: false,
-      cooldown: 3,
-      category: Category.Fun,
-      options: [
-        {
-          name: "user",
-          description: "The user to play with",
-          type: ApplicationCommandOptionType.String,
-          required: false,
-        },
-      ],
-      dm_permission: false,
-      default_member_permissions:
-        PermissionsBitField.Flags.UseApplicationCommands,
+      name: "games.tictactoe",
     });
   }
   async Execute(interaction: ChatInputCommandInteraction) {
     let guild = await GuildConfig.findOne({ id: interaction.guildId });
+
+    let commandCounter = await CommandCounter.findOne({ global: 1 });
+
+    commandCounter!.games.tictactoe.used += 1;
+    await commandCounter?.save();
 
     if (guild && guild.language === "fr") {
       let game = new TicTacToe({ language: "fr" });

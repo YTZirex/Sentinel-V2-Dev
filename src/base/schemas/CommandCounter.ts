@@ -39,6 +39,9 @@ interface CommandCounter {
     jobList: {
       used: number;
     };
+    jobDelete: {
+      used: number;
+    };
   };
   ban: {
     banAdd: {
@@ -97,6 +100,58 @@ interface CommandCounter {
   ping: {
     used: number;
   };
+  kiss: {
+    used: number;
+  };
+  hug: {
+    used: number;
+  };
+  protection: {
+    blacklist: {
+      used: number;
+    };
+    scan: {
+      used: number;
+    };
+    mentions: {
+      used: number;
+    };
+    messages: {
+      used: number;
+    };
+    delete: {
+      used: number;
+    };
+  };
+  joke: {
+    used: number;
+  };
+  claimpremium: {
+    used: number;
+  };
+  magicball: {
+    used: number;
+  };
+  games: {
+    tictactoe: {
+      used: number;
+    };
+    twozerofoureight: {
+      used: number;
+    };
+    rpc: {
+      used: number;
+    };
+    slots: {
+      used: number;
+    };
+    snake: {
+      used: number;
+    };
+  };
+  quote: {
+    used: number;
+  };
 }
 
 export default model<CommandCounter>(
@@ -138,6 +193,9 @@ export default model<CommandCounter>(
         used: Number,
       },
       jobList: {
+        used: Number,
+      },
+      jobDelete: {
         used: Number,
       },
     },
@@ -196,6 +254,58 @@ export default model<CommandCounter>(
       used: Number,
     },
     ping: {
+      used: Number,
+    },
+    kiss: {
+      used: Number,
+    },
+    hug: {
+      used: Number,
+    },
+    protection: {
+      blacklist: {
+        used: Number,
+      },
+      scan: {
+        used: Number,
+      },
+      mentions: {
+        used: Number,
+      },
+      messages: {
+        used: Number,
+      },
+      delete: {
+        used: Number,
+      },
+    },
+    joke: {
+      used: Number,
+    },
+    claimpremium: {
+      used: Number,
+    },
+    magicball: {
+      used: Number,
+    },
+    games: {
+      tictactoe: {
+        used: Number,
+      },
+      twozerofoureight: {
+        used: Number,
+      },
+      rpc: {
+        used: Number,
+      },
+      slots: {
+        used: Number,
+      },
+      snake: {
+        used: Number,
+      },
+    },
+    quote: {
       used: Number,
     },
   })

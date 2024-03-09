@@ -7,6 +7,7 @@ import Command from "../../base/classes/Command";
 import CustomClient from "../../base/classes/CustomClient";
 import Category from "../../base/enums/Category";
 import GuildConfig from "../../base/schemas/GuildConfig";
+import CommandCounter from "../../base/schemas/CommandCounter";
 
 export default class MagicBall extends Command {
   constructor(client: CustomClient) {
@@ -49,6 +50,11 @@ export default class MagicBall extends Command {
     let finalAnswerIndex = Math.floor(
       Math.random() * Math.floor(answers.length)
     );
+
+    let commandCounter = await CommandCounter.findOne({ global: 1 });
+
+    commandCounter!.magicball.used += 1;
+    await commandCounter?.save();
 
     let guild = await GuildConfig.findOne({ id: interaction.guildId });
 

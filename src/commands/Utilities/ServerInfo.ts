@@ -23,30 +23,23 @@ export default class ServerInfo extends Command {
   }
 
   async Execute(interaction: ChatInputCommandInteraction) {
-
     let commandCounter = await CommandCounter.findOne({ global: 1 });
     commandCounter!.serverInfo.used += 1;
     await commandCounter?.save();
 
-    interaction.reply({
-      content: "Command not made yet.",
-      ephemeral: true,
-    });
-
     let guildFetched = await interaction.guild?.fetch();
 
     let guild = await GuildConfig.findOne({
-      id: interaction.guildId
+      id: interaction.guildId,
     });
 
     let guildProtection = await GuildProtection.findOne({
       id: interaction.guildId,
-    })
+    });
 
     return interaction.reply({
       content: `This command was not made yet.`,
-      ephemeral: true
-    })
-
+      ephemeral: true,
+    });
   }
 }

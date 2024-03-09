@@ -56,7 +56,9 @@ export default class UserInfo extends Command {
             //@ts-ignore
             color: 0x6666ff,
             thumbnail: {
-              url: fetchedMember.user.displayAvatarURL({ size: 64 }),
+              url:
+                fetchedMember.user.displayAvatarURL({ size: 64 }) ||
+                this.client.user?.displayAvatarURL({ size: 64 })!,
             },
             author: {
               name: `${
@@ -64,7 +66,9 @@ export default class UserInfo extends Command {
                   ? `Profil de ${fetchedMember.user.tag}`
                   : `${fetchedMember.user.tag}'s profile`
               }`,
-              icon_url: fetchedMember.displayAvatarURL(),
+              icon_url:
+                fetchedMember.displayAvatarURL() ||
+                this.client.user?.displayAvatarURL()!,
             },
             description: `
   
@@ -90,7 +94,7 @@ export default class UserInfo extends Command {
             > ${guild.language === "fr" ? "**Surnom:**" : "**Nickname:**"} ${
               fetchedMember.nickname || fetchedMember.user.username
             }
-            > **Roles:** ${fetchedMember.roles.cache.size - 1}: ${
+            > **Roles [${fetchedMember.roles.cache.size - 1}]:** ${
               fetchedMember.roles.cache
                 .map((r) => r)
                 .join(", ")
@@ -128,11 +132,15 @@ export default class UserInfo extends Command {
             //@ts-ignore
             color: 0x6666ff,
             thumbnail: {
-              url: fetchedMember.user.displayAvatarURL({ size: 64 }),
+              url:
+                fetchedMember.user.displayAvatarURL({ size: 64 }) ||
+                this.client.user?.displayAvatarURL({ size: 64 })!,
             },
             author: {
               name: `${fetchedMember.user.tag}'s profile`,
-              icon_url: fetchedMember.displayAvatarURL(),
+              icon_url:
+                fetchedMember.displayAvatarURL() ||
+                this.client.user?.displayAvatarURL()!,
             },
             description: `
   
@@ -152,7 +160,7 @@ export default class UserInfo extends Command {
             > **Nickname:** ${
               fetchedMember.nickname || fetchedMember.user.username
             }
-            > **Roles:** ${fetchedMember.roles.cache.size - 1}: ${
+            > **Roles [${fetchedMember.roles.cache.size - 1}]**: ${
               fetchedMember.roles.cache
                 .map((r) => r)
                 .join(", ")

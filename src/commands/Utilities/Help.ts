@@ -22,7 +22,7 @@ export default class Select extends Command {
   }
 
   async Execute(interaction: ChatInputCommandInteraction) {
-    await interaction.deferReply();
+    await interaction.deferReply({ ephemeral: true });
     let interactionUserId = interaction.user.id;
 
     let commandCounter = await CommandCounter.findOne({ global: 1 });
@@ -65,6 +65,13 @@ export default class Select extends Command {
                     value: "fun",
                     emoji: {
                       name: "🎉",
+                    },
+                  },
+                  {
+                    label: guild.language === "fr" ? "Jeux" : "Games",
+                    value: "games",
+                    emoji: {
+                      name: "🎮",
                     },
                   },
                   {
@@ -131,6 +138,13 @@ export default class Select extends Command {
                     value: "fun",
                     emoji: {
                       name: "🎉",
+                    },
+                  },
+                  {
+                    label: "Games",
+                    value: "games",
+                    emoji: {
+                      name: "🎮",
                     },
                   },
                   {
@@ -252,6 +266,20 @@ export default class Select extends Command {
                             ? `Montre l'avatar d'un utilisateur`
                             : `Shows a user's avatar.`,
                       },
+                      {
+                        name: "</quote:1214343869567729666>",
+                        value:
+                          guild.language === "fr"
+                            ? "Génère une citation aléatoire."
+                            : "Get a random quote.",
+                      },
+                      {
+                        name: "</weather:1215034912621600798>",
+                        value:
+                          guild.language === "fr"
+                            ? "Obtenez la météo actuelle d’un lieu."
+                            : "Get the current weather of a location.",
+                      },
                     ],
                   },
                 ],
@@ -272,11 +300,74 @@ export default class Select extends Command {
                             : `Ask a question to the magic ball.`,
                       },
                       {
-                        name: "</tictactoe:1210221785849790495>",
+                        name: "</kiss:1211782590743187526>",
                         value:
                           guild.language === "fr"
-                            ? `Joue une partie de morpion avec une IA ou un adversaire.`
+                            ? "Montrez votre affection en embrassant quelqu’un <3"
+                            : `Show your affection by kissing someone <3`,
+                      },
+                      {
+                        name: "</hug:1211782590743187527>",
+                        value:
+                          guild.language === "fr"
+                            ? "Montrez votre affection en serrant quelqu’un dans vos bras <3"
+                            : `Show your affection by hugging someone <3`,
+                      },
+                      {
+                        name: "</joke:1213921432266874911>",
+                        value:
+                          guild.language === "fr"
+                            ? `Donne une blague aléatoire.`
+                            : `Get a random joke.`,
+                      },
+                    ],
+                  },
+                ],
+              });
+            } else if (choices === "games") {
+              interaction.update({
+                embeds: [
+                  {
+                    title: guild.language === "fr" ? "🎮 Jeux" : "🎮 Games",
+                    color: 0x6666ff,
+                    thumbnail: {
+                      url: this.client.user!.displayAvatarURL(),
+                    },
+                    fields: [
+                      {
+                        name: "</games tictactoe:1214304049063661598>",
+                        value:
+                          guild.language === "fr"
+                            ? `Jouez au morpion avec une IA ou un adversaire.`
                             : `Play a game of tic tac toe with an AI or an opponent.`,
+                      },
+                      {
+                        name: "</games 2048:1214304049063661598>",
+                        value:
+                          guild.language === "fr"
+                            ? "Jouez au 2048."
+                            : `Play a game of 2048.`,
+                      },
+                      {
+                        name: "</games rpc:1214304049063661598>",
+                        value:
+                          guild.language === "fr"
+                            ? "Jouez à Pierre Feuille Ciseaux avec un adversaire."
+                            : `Play a game of Rock Paper Scissors with an opponent.`,
+                      },
+                      {
+                        name: "</games snake:1214304049063661598>",
+                        value:
+                          guild.language === "fr"
+                            ? `Jouez au snake.`
+                            : `Play a game of snake.`,
+                      },
+                      {
+                        name: "</games slots:1214304049063661598>",
+                        value:
+                          guild.language === "fr"
+                            ? `Jouez à la machine à sous.`
+                            : `Play a game of slots`,
                       },
                     ],
                   },
@@ -416,6 +507,34 @@ export default class Select extends Command {
                     },
                     fields: [
                       {
+                        name: "</protection scan:1213599917524779069>",
+                        value:
+                          guild.language === "fr"
+                            ? `Scan le serveur pour trouver des utilisateurs blacklist.`
+                            : `Scans the server to find blacklisted users.`,
+                      },
+                      {
+                        name: "</protection mentions:1213599917524779069>",
+                        value:
+                          guild.language === "fr"
+                            ? `Met une limite de mentions par messages.`
+                            : `Set a limit for mentions in a message.`,
+                      },
+                      {
+                        name: "</protection messages:1213599917524779069>",
+                        value:
+                          guild.language === "fr"
+                            ? `Supprime les messages contenant une invitation ou un lien si l'utilisateur n'a pas la permission \`Gérer les messages\`.`
+                            : `Deletes message including a link or an invite if the user does not have the \`Manage Messages\` permission.`,
+                      },
+                      {
+                        name: "</protection blacklist:1213599917524779069>",
+                        value:
+                          guild.language === "fr"
+                            ? `Empêche les utilisateurs blacklist de rejoindre le serveur.`
+                            : `Prevents blacklisted users from joining the server.`,
+                      },
+                      {
                         name: "</announcement:1206014845267480618>",
                         value:
                           guild.language === "fr"
@@ -501,6 +620,14 @@ export default class Select extends Command {
                         name: "</avatar:1209939749746249770>",
                         value: `Shows a user's avatar.`,
                       },
+                      {
+                        name: "</quote:1214343869567729666>",
+                        value: "Get a random quote.",
+                      },
+                      {
+                        name: "</weather:1215034912621600798>",
+                        value: "Get the current weather of a location.",
+                      },
                     ],
                   },
                 ],
@@ -520,6 +647,52 @@ export default class Select extends Command {
                       {
                         name: "</tictactoe:1210221785849790495>",
                         value: `Play a game of tic tac toe with an AI or an opponent.`,
+                      },
+                      {
+                        name: "</kiss:1211782590743187526>",
+                        value: `Show your affection by kissing someone <3`,
+                      },
+                      {
+                        name: "</hug:1211782590743187527>",
+                        value: `Show your affection by hugging someone <3`,
+                      },
+                      {
+                        name: "</joke:1213921432266874911>",
+                        value: `Get a random joke.`,
+                      },
+                    ],
+                  },
+                ],
+              });
+            } else if (choices === "games") {
+              interaction.update({
+                embeds: [
+                  {
+                    title: "🎮 Games",
+                    color: 0x6666ff,
+                    thumbnail: {
+                      url: this.client.user!.displayAvatarURL(),
+                    },
+                    fields: [
+                      {
+                        name: "</games tictactoe:1214304049063661598>",
+                        value: `Play a game of tic tac toe with an AI or an opponent.`,
+                      },
+                      {
+                        name: "</games 2048:1214304049063661598>",
+                        value: `Play a game of 2048.`,
+                      },
+                      {
+                        name: "</games rpc:1214304049063661598>",
+                        value: `Play a game of Rock Paper Scissors with an opponent.`,
+                      },
+                      {
+                        name: "</games snake:1214304049063661598>",
+                        value: `Play a game of snake.`,
+                      },
+                      {
+                        name: "</games slots:1214304049063661598>",
+                        value: `Play a game of slots`,
                       },
                     ],
                   },
@@ -616,6 +789,22 @@ export default class Select extends Command {
                       url: this.client.user!.displayAvatarURL(),
                     },
                     fields: [
+                      {
+                        name: "</protection scan:1213599917524779069>",
+                        value: `Scans the server to find blacklisted users.`,
+                      },
+                      {
+                        name: "</protection mentions:1213599917524779069>",
+                        value: `Set a limit for mentions in a message.`,
+                      },
+                      {
+                        name: "</protection messages:1213599917524779069>",
+                        value: `Deletes message including a link or an invite if the user does not have the \`Manage Messages\` permission.`,
+                      },
+                      {
+                        name: "</protection blacklist:1213599917524779069>",
+                        value: `Prevents blacklisted users from joining the server.`,
+                      },
                       {
                         name: "</announcement:1206014845267480618>",
                         value: `Allows you to create an announcement.`,

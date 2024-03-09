@@ -8,6 +8,7 @@ import {
   PermissionsBitField,
 } from "discord.js";
 import GuildConfig from "../../base/schemas/GuildConfig";
+import CommandCounter from "../../base/schemas/CommandCounter";
 
 export default class Hug extends Command {
   constructor(client: CustomClient) {
@@ -32,6 +33,11 @@ export default class Hug extends Command {
     });
   }
   async Execute(interaction: ChatInputCommandInteraction) {
+    let commandCounter = await CommandCounter.findOne({ global: 1 });
+
+    commandCounter!.hug.used += 1;
+    await commandCounter?.save();
+
     let apiUrl = `https://nekos.life/api/v2/img/hug`;
     let target = interaction.options.getUser("target");
     let guild = await GuildConfig.findOne({ id: interaction.guildId });
@@ -54,7 +60,11 @@ export default class Hug extends Command {
         ],
       });
     } catch (err) {
-      return interaction.editReply(`An error occured while trying to hug.`);
+      return interaction.editReply(
+        guild && guild.language === "fr"
+          ? "Une erreur est survenue en essayant de faire un calin."
+          : `An error occured while trying to hug.`
+      );
     }
   }
 }

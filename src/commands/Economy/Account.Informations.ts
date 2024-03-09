@@ -18,7 +18,6 @@ export default class AccountInformations extends SubCommand {
     commandcounter!.account.accountInformations.used += 1;
     await commandcounter!.save();
 
-
     await interaction.deferReply({ ephemeral: true });
 
     if (!economy)
@@ -98,8 +97,8 @@ export default class AccountInformations extends SubCommand {
                   : "💸 **Amount: **",
               value:
                 guild && guild.language === "fr"
-                  ? `€ ${economy.balance}`
-                  : `$ ${economy.balance}`,
+                  ? `€ ${this.separateNumbers(economy.balance)}`
+                  : `$ ${this.separateNumbers(economy.balance)}`,
             },
             {
               name: "\u200a",
@@ -138,5 +137,23 @@ export default class AccountInformations extends SubCommand {
         },
       ],
     });
+  }
+  private separateNumbers(number: any) {
+    // Convert the number to a string
+    let numberString = number.toString();
+
+    // Split the string into groups of three digits from the end
+    let separatedNumber = [];
+    let group = "";
+    for (let i = numberString.length - 1; i >= 0; i--) {
+      group = numberString[i] + group;
+      if (group.length === 3 || i === 0) {
+        separatedNumber.unshift(group);
+        group = "";
+      }
+    }
+
+    // Join the groups with spaces
+    return separatedNumber.join(" ");
   }
 }

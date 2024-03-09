@@ -31,8 +31,11 @@ export default class AccountDelete extends SubCommand {
         embeds: [
           {
             color: 0xff6666,
-            title: "❔ Oops!",
-            description: `To delete your account, you must select **True**.\nPlease understand that if you delete your account, we can't undo this action.`,
+            title: guild && guild.language === "fr" ? "Oups!" : "Oops!",
+            description:
+              guild && guild.language === "fr"
+                ? "Pour supprimer votre compte, vous devez sélectionner **True**. Merci de comprendre que si vous supprimez votre compte, nous ne pouvons pas annuler cette action."
+                : `To delete your account, you must select **True**.\nPlease understand that if you delete your account, we can't undo this action.`,
           },
         ],
       });
