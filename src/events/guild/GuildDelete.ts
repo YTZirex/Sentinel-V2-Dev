@@ -4,6 +4,7 @@ import Event from "../../base/classes/Event";
 import GuildConfig from "../../base/schemas/GuildConfig";
 import BlacklistedUser from "../../base/schemas/BlacklistedUser";
 import GuildProtection from "../../base/schemas/GuildProtection";
+import GuildModules from "../../base/schemas/GuildModules";
 
 export default class GuildDelete extends Event {
   constructor(client: CustomClient) {
@@ -24,6 +25,9 @@ export default class GuildDelete extends Event {
         id: guild.id,
       });
       await GuildProtection.deleteOne({
+        id: guild.id,
+      });
+      await GuildModules.deleteOne({
         id: guild.id,
       });
     } catch (err) {

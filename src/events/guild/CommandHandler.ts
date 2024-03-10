@@ -13,6 +13,7 @@ import BlacklistedUser from "../../base/schemas/BlacklistedUser";
 import GuildConfig from "../../base/schemas/GuildConfig";
 import Category from "../../base/enums/Category";
 import PremiumUser from "../../base/schemas/PremiumUser";
+import GuildModules from "../../base/schemas/GuildModules";
 
 export default class CommandHandler extends Event {
   constructor(client: CustomClient) {
@@ -35,7 +36,6 @@ export default class CommandHandler extends Event {
 
   async Execute(interaction: ChatInputCommandInteraction) {
     let guild = await GuildConfig.findOne({ id: interaction.guildId });
-    let failEmbed = new EmbedBuilder().setTitle(`Oops!`).setColor("Red");
 
     if (!interaction.isChatInputCommand()) return;
 
@@ -44,7 +44,15 @@ export default class CommandHandler extends Event {
     if (!command)
       return interaction.reply({
         embeds: [
-          failEmbed.setDescription(`❌ This command does not seem to exist.`),
+          {
+            color: 0xff6666,
+            title: guild && guild.language === "fr" ? "Oups!" : "Oops!",
+            thumbnail: { url: this.client.user.displayAvatarURL() },
+            description:
+              guild && guild.language === "fr"
+                ? `Cette commande ne semble pas exister.`
+                : "This command does not seem to exist.",
+          },
         ],
         ephemeral: true,
       });
@@ -75,64 +83,34 @@ export default class CommandHandler extends Event {
     }
 
     if (blacklistedUser.blacklisted === true) {
-      if (guild && guild.language) {
-        return interaction.reply({
-          embeds: [
-            {
-              color: 0xff6666,
-              title: guild.language === "fr" ? "Oups!" : "Oops!",
-              description:
-                guild.language === "fr"
-                  ? "❌ Vous êtes actuellement blacklist de Sentinel. Pour contester votre sanction, veuillez rejoindre notre Support."
-                  : "❌ You are currently blacklisted from Sentinel. To appeal, please join our Support.",
-              thumbnail: { url: this.client.user!.displayAvatarURL() },
-            },
-          ],
-          ephemeral: true,
-          components: [
-            {
-              type: 1,
-              components: [
-                {
-                  type: 2,
-                  style: 5,
-                  url: "https://discord.gg/My2BVCmJEY",
-                  label: "Support",
-                  emoji: "💬",
-                },
-              ],
-            },
-          ],
-        });
-      } else {
-        return interaction.reply({
-          ephemeral: true,
-          embeds: [
-            {
-              color: 0xff6666,
-              title: "Oops!",
-              description: `❌ You are currently blacklisted from Sentinel. To appeal, please join our Support.`,
-              thumbnail: {
-                url: this.client.user?.displayAvatarURL()!,
+      return interaction.reply({
+        embeds: [
+          {
+            color: 0xff6666,
+            title: guild && guild.language === "fr" ? "Oups!" : "Oops!",
+            description:
+              guild && guild.language === "fr"
+                ? "Vous êtes actuellement blacklist de Sentinel. Pour contester votre sanction, veuillez rejoindre notre Support."
+                : "You are currently blacklisted from Sentinel. To appeal, please join our Support.",
+            thumbnail: { url: this.client.user!.displayAvatarURL() },
+          },
+        ],
+        ephemeral: true,
+        components: [
+          {
+            type: 1,
+            components: [
+              {
+                type: 2,
+                style: 5,
+                url: "https://discord.gg/My2BVCmJEY",
+                label: "Support",
+                emoji: "💬",
               },
-            },
-          ],
-          components: [
-            {
-              type: 1,
-              components: [
-                {
-                  type: 2,
-                  style: 5,
-                  url: "https://discord.gg/My2BVCmJEY",
-                  label: "Support",
-                  emoji: "💬",
-                },
-              ],
-            },
-          ],
-        });
-      }
+            ],
+          },
+        ],
+      });
     }
 
     if (command.premium === true) {
@@ -161,58 +139,103 @@ export default class CommandHandler extends Event {
       }
     }
 
-    if (
-      command.dev &&
-      command.category === Category.Blacklist &&
-      userConfig.canBlacklist === false
-    ) {
-      return interaction.reply({
-        embeds: [
-          {
-            color: 0xff6666,
-            title: "Oops!",
-            description: `❌ You are not allowed to use this command.`,
-            thumbnail: {
-              url: this.client.user?.displayAvatarURL()!,
+    let guildModules = await GuildModules.findOne({ id: interaction.guildId });
+
+    if (command.category === Category.Economy) {
+      if (guildModules && guildModules.economy.enabled === false) {
+        return interaction.reply({
+          embeds: [
+            {
+              color: 0xff6666,
+              description:
+                guild && guild.language === "fr"
+                  ? `Le module **Economie** est désactivé sur **${
+                      interaction.guild!.name
+                    }**.`
+                  : `The **Economy** module is disabled on **${
+                      interaction.guild!.name
+                    }**.`,
+              title: guild && guild.language === "fr" ? "Oups!" : "Oops!",
+              thumbnail: {
+                url:
+                  interaction.guild?.iconURL() ||
+                  this.client.user.displayAvatarURL(),
+              },
             },
-          },
-        ],
-        ephemeral: true,
-      });
+          ],
+          ephemeral: true,
+        });
+      }
     }
 
-    if (
-      command.dev &&
-      command.category === Category.Staff &&
-      userConfig.editPremium === false
-    ) {
-      return interaction.reply({
-        embeds: [
-          {
-            color: 0xff6666,
-            title: "Oops!",
-            description: `❌ You are not allowed to use this command.`,
-            thumbnail: {
-              url: this.client.user?.displayAvatarURL()!,
+    if (command.dev) {
+      if (
+        command.category === Category.Blacklist &&
+        userConfig.canBlacklist === false
+      ) {
+        return interaction.reply({
+          embeds: [
+            {
+              color: 0xff6666,
+              title: "Oops!",
+              description:
+                guild && guild.language === "fr"
+                  ? "Vous n'avez pas l'autorisation d'utiliser cette commande."
+                  : `You are not allowed to use this command.`,
+              thumbnail: {
+                url: this.client.user?.displayAvatarURL()!,
+              },
             },
-          },
-        ],
-        ephemeral: true,
-      });
-    }
+          ],
+          ephemeral: true,
+        });
+      }
 
-    if (
-      command.dev &&
-      command.category !== Category.Blacklist &&
-      command.category !== Category.Staff &&
-      userConfig.dev === false
-    )
-      return interaction.reply({
-        embeds: [
-          failEmbed.setDescription(`❌ This command is only for developers.`),
-        ],
-        ephemeral: true,
-      });
+      if (
+        command.category === Category.Staff &&
+        userConfig.editPremium === false
+      ) {
+        return interaction.reply({
+          embeds: [
+            {
+              color: 0xff6666,
+              title: "Oops!",
+              description:
+                guild && guild.language === "fr"
+                  ? "Vous n'avez pas l'autorisation d'utiliser cette commande."
+                  : `You are not allowed to use this command.`,
+              thumbnail: {
+                url: this.client.user?.displayAvatarURL()!,
+              },
+            },
+          ],
+          ephemeral: true,
+        });
+      }
+
+      if (
+        command.category !== Category.Blacklist &&
+        command.category !== Category.Staff &&
+        userConfig.dev === false
+      ) {
+        return interaction.reply({
+          embeds: [
+            {
+              color: 0xff6666,
+              title: "Oops!",
+              description:
+                guild && guild.language === "fr"
+                  ? "Vous n'avez pas l'autorisation d'utiliser cette commande."
+                  : `You are not allowed to use this command.`,
+              thumbnail: {
+                url: this.client.user?.displayAvatarURL()!,
+              },
+            },
+          ],
+          ephemeral: true,
+        });
+      }
+    }
 
     const { cooldowns } = this.client;
 
@@ -231,11 +254,18 @@ export default class CommandHandler extends Event {
         (timestamps.get(interaction.user.id) || 0) + cooldownAmount - now;
       return interaction.reply({
         embeds: [
-          failEmbed.setDescription(
-            `❌ Please wait another \`${this.uptimeString(
-              Math.floor(timeLeft / 1000)
-            )}\` to run this command.`
-          ),
+          {
+            color: 0xff6666,
+            description:
+              guild && guild.language === "fr"
+                ? `Veuillez attendre \`${this.uptimeString(
+                    Math.floor(timeLeft / 1000)
+                  )}\` avant d'utiliser cette commande.`
+                : `Please wait another \`${this.uptimeString(
+                    Math.floor(timeLeft / 1000)
+                  )}\` to run this command.`,
+            thumbnail: { url: this.client.user.displayAvatarURL() },
+          },
         ],
         ephemeral: true,
       });
@@ -315,6 +345,7 @@ export default class CommandHandler extends Event {
       });
 
       return interaction.reply({
+        ephemeral: true,
         embeds: [
           {
             color: 0xff6666,

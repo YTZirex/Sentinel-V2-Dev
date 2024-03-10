@@ -14,14 +14,14 @@ export default class JobList extends SubCommand {
     let guild = await GuildConfig.findOne({ id: interaction.guildId });
     let commandcounter = await CommandCounter.findOne({ global: 1 });
     commandcounter!.job.jobList.used += 1;
-    await commandcounter?.save()
+    await commandcounter?.save();
     await interaction.deferReply();
 
     interaction.editReply({
       embeds: [
         {
           color: 0xff6633,
-         // title: guild && guild.language === "fr" ? "Métiers" : "Jobs",
+          // title: guild && guild.language === "fr" ? "Métiers" : "Jobs",
           thumbnail: {
             url: this.client.user!.displayAvatarURL(),
           },
@@ -67,7 +67,7 @@ export default class JobList extends SubCommand {
               value:
                 guild && guild.language === "fr"
                   ? "**Prix**: 2 500\n**Salaire**: 300"
-                  : "**Price**: 2 5000\n**Salary**: 300",
+                  : "**Price**: 2 500\n**Salary**: 300",
             },
             {
               name:

@@ -182,25 +182,6 @@ export default class Select extends Command {
 
     this.client.on("interactionCreate", async (interaction) => {
       if (interaction.isStringSelectMenu()) {
-        if (interaction.user.id !== interactionUserId) {
-          if (guild && guild.language) {
-            interaction.reply({
-              content: `${
-                guild.language === "fr"
-                  ? "Ce n'est pas votre commande !"
-                  : "This is not your command ! "
-              }`,
-              ephemeral: true,
-            });
-          } else {
-            interaction.reply({
-              content: `This is not your command !`,
-              ephemeral: true,
-            });
-          }
-
-          return;
-        }
         if (interaction.customId === "help_select") {
           const [choices] = interaction.values;
           if (guild && guild.language) {

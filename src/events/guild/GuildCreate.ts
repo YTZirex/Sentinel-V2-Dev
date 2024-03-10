@@ -4,6 +4,8 @@ import Event from "../../base/classes/Event";
 import GuildConfig from "../../base/schemas/GuildConfig";
 import BlacklistedUser from "../../base/schemas/BlacklistedUser";
 import { black } from "colors";
+import GuildModules from "../../base/schemas/GuildModules";
+import GuildProtection from "../../base/schemas/GuildProtection";
 
 export default class GuildCreate extends Event {
   constructor(client: CustomClient) {
@@ -17,6 +19,10 @@ export default class GuildCreate extends Event {
     try {
       if (!(await GuildConfig.exists({ id: guild.id })))
         await GuildConfig.create({ id: guild.id });
+      if (!(await GuildModules.exists({ id: guild.id })))
+        await GuildModules.create({ id: guild.id });
+      if (!(await GuildProtection.exists({ id: guild.id })))
+        await GuildProtection.create({ id: guild.id });
     } catch (err) {
       console.log(err);
     }
